@@ -40,13 +40,12 @@
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
-		329F528C53DE44219B33744A /* libRNSimpleCompass.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DEFEBC1DC74F7580DFB158 /* libRNSimpleCompass.a */; };
-		B0F1FC656E974BA0857E6531 /* libRNCMaskedView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7015BDAF36A477288B015BB /* libRNCMaskedView.a */; };
-		84F474E120C9469C9702C448 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62B97BA79E6040E7A39A8032 /* libRNGestureHandler.a */; };
-		BA9DEBF8695C432C89CE6BD9 /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B80653AD6242479587582849 /* libRNGestureHandler-tvOS.a */; };
-		DD8085D81CDE45EBBD581BDF /* libRNCSafeAreaContext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 47985D6166FE4B29A859BD31 /* libRNCSafeAreaContext.a */; };
-		A4917D07E63447A790028DF0 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A44054F61244B21B38738A3 /* libRNScreens.a */; };
-		76CC663847A34F02B20972E2 /* libRNScreens-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D95FE45115DF42EE9A575FF1 /* libRNScreens-tvOS.a */; };
+		AFC5F308A39C463491649ECA /* libRNCMaskedView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 24E9ABCD69C64528BB37AA73 /* libRNCMaskedView.a */; };
+		2AADEBA14C8640DAB225E9F7 /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E929633E282449D8B997E92D /* libRNGestureHandler.a */; };
+		ECABBAFE4FA94AC885E0DA0A /* libRNGestureHandler-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CF172785ABC9406581AEC59C /* libRNGestureHandler-tvOS.a */; };
+		B67AB3DA7C6047EF94AEEE93 /* libRNCSafeAreaContext.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F9EFA19B9EED40EE859B6052 /* libRNCSafeAreaContext.a */; };
+		A41446E7165643D993AD3633 /* libRNScreens.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0425C8259F504F6B8CF41A17 /* libRNScreens.a */; };
+		545C5D26E3CE4FB98927A7C7 /* libRNScreens-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7466AF380A63448CA6290643 /* libRNScreens-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -354,18 +353,16 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		02579AB9DBD34E90B63B0238 /* RNSimpleCompass.xcodeproj */ = {isa = PBXFileReference; name = "RNSimpleCompass.xcodeproj"; path = "../node_modules/react-native-simple-compass/ios/RNSimpleCompass.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		B0DEFEBC1DC74F7580DFB158 /* libRNSimpleCompass.a */ = {isa = PBXFileReference; name = "libRNSimpleCompass.a"; path = "libRNSimpleCompass.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		4176CC45B5DF4EB4B82D7CE5 /* RNCMaskedView.xcodeproj */ = {isa = PBXFileReference; name = "RNCMaskedView.xcodeproj"; path = "../node_modules/@react-native-community/masked-view/ios/RNCMaskedView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		C7015BDAF36A477288B015BB /* libRNCMaskedView.a */ = {isa = PBXFileReference; name = "libRNCMaskedView.a"; path = "libRNCMaskedView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		50652D9B15844781AED89281 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; name = "RNGestureHandler.xcodeproj"; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		62B97BA79E6040E7A39A8032 /* libRNGestureHandler.a */ = {isa = PBXFileReference; name = "libRNGestureHandler.a"; path = "libRNGestureHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		B80653AD6242479587582849 /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; name = "libRNGestureHandler-tvOS.a"; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		BD5670AFC8624A0AA0E3B042 /* SafeAreaView.xcodeproj */ = {isa = PBXFileReference; name = "SafeAreaView.xcodeproj"; path = "../node_modules/react-native-safe-area-context/ios/SafeAreaView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		47985D6166FE4B29A859BD31 /* libRNCSafeAreaContext.a */ = {isa = PBXFileReference; name = "libRNCSafeAreaContext.a"; path = "libRNCSafeAreaContext.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		1EF748881BDB4A5685AFEED0 /* RNScreens.xcodeproj */ = {isa = PBXFileReference; name = "RNScreens.xcodeproj"; path = "../node_modules/react-native-screens/ios/RNScreens.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		6A44054F61244B21B38738A3 /* libRNScreens.a */ = {isa = PBXFileReference; name = "libRNScreens.a"; path = "libRNScreens.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		D95FE45115DF42EE9A575FF1 /* libRNScreens-tvOS.a */ = {isa = PBXFileReference; name = "libRNScreens-tvOS.a"; path = "libRNScreens-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		A6FECCDDB616413EB8B18DFB /* RNCMaskedView.xcodeproj */ = {isa = PBXFileReference; name = "RNCMaskedView.xcodeproj"; path = "../node_modules/@react-native-community/masked-view/ios/RNCMaskedView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		24E9ABCD69C64528BB37AA73 /* libRNCMaskedView.a */ = {isa = PBXFileReference; name = "libRNCMaskedView.a"; path = "libRNCMaskedView.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E5CDA7B847534D489A42ED12 /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; name = "RNGestureHandler.xcodeproj"; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		E929633E282449D8B997E92D /* libRNGestureHandler.a */ = {isa = PBXFileReference; name = "libRNGestureHandler.a"; path = "libRNGestureHandler.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		CF172785ABC9406581AEC59C /* libRNGestureHandler-tvOS.a */ = {isa = PBXFileReference; name = "libRNGestureHandler-tvOS.a"; path = "libRNGestureHandler-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		CB159E841C9C4FD18C208C93 /* SafeAreaView.xcodeproj */ = {isa = PBXFileReference; name = "SafeAreaView.xcodeproj"; path = "../node_modules/react-native-safe-area-context/ios/SafeAreaView.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		F9EFA19B9EED40EE859B6052 /* libRNCSafeAreaContext.a */ = {isa = PBXFileReference; name = "libRNCSafeAreaContext.a"; path = "libRNCSafeAreaContext.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		0CE85C440D6A40AB8BB2B30F /* RNScreens.xcodeproj */ = {isa = PBXFileReference; name = "RNScreens.xcodeproj"; path = "../node_modules/react-native-screens/ios/RNScreens.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		0425C8259F504F6B8CF41A17 /* libRNScreens.a */ = {isa = PBXFileReference; name = "libRNScreens.a"; path = "libRNScreens.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7466AF380A63448CA6290643 /* libRNScreens-tvOS.a */ = {isa = PBXFileReference; name = "libRNScreens-tvOS.a"; path = "libRNScreens-tvOS.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -394,11 +391,10 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				329F528C53DE44219B33744A /* libRNSimpleCompass.a in Frameworks */,
-				B0F1FC656E974BA0857E6531 /* libRNCMaskedView.a in Frameworks */,
-				84F474E120C9469C9702C448 /* libRNGestureHandler.a in Frameworks */,
-				DD8085D81CDE45EBBD581BDF /* libRNCSafeAreaContext.a in Frameworks */,
-				A4917D07E63447A790028DF0 /* libRNScreens.a in Frameworks */,
+				AFC5F308A39C463491649ECA /* libRNCMaskedView.a in Frameworks */,
+				2AADEBA14C8640DAB225E9F7 /* libRNGestureHandler.a in Frameworks */,
+				B67AB3DA7C6047EF94AEEE93 /* libRNCSafeAreaContext.a in Frameworks */,
+				A41446E7165643D993AD3633 /* libRNScreens.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,8 +411,8 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
-				BA9DEBF8695C432C89CE6BD9 /* libRNGestureHandler-tvOS.a in Frameworks */,
-				76CC663847A34F02B20972E2 /* libRNScreens-tvOS.a in Frameworks */,
+				ECABBAFE4FA94AC885E0DA0A /* libRNGestureHandler-tvOS.a in Frameworks */,
+				545C5D26E3CE4FB98927A7C7 /* libRNScreens-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,11 +586,10 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				02579AB9DBD34E90B63B0238 /* RNSimpleCompass.xcodeproj */,
-				4176CC45B5DF4EB4B82D7CE5 /* RNCMaskedView.xcodeproj */,
-				50652D9B15844781AED89281 /* RNGestureHandler.xcodeproj */,
-				BD5670AFC8624A0AA0E3B042 /* SafeAreaView.xcodeproj */,
-				1EF748881BDB4A5685AFEED0 /* RNScreens.xcodeproj */,
+				A6FECCDDB616413EB8B18DFB /* RNCMaskedView.xcodeproj */,
+				E5CDA7B847534D489A42ED12 /* RNGestureHandler.xcodeproj */,
+				CB159E841C9C4FD18C208C93 /* SafeAreaView.xcodeproj */,
+				0CE85C440D6A40AB8BB2B30F /* RNScreens.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1228,11 +1223,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",
@@ -1264,11 +1257,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",
@@ -1295,7 +1286,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",
@@ -1321,7 +1311,6 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",
@@ -1361,11 +1350,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",
@@ -1405,11 +1392,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",
@@ -1448,11 +1433,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",
@@ -1491,11 +1474,9 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SRCROOT)\..\node_modules\react-native-simple-compass\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\masked-view\ios",
 					"$(SRCROOT)\..\node_modules\react-native-gesture-handler\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-safe-area-context\ios\SafeAreaView",

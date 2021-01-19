@@ -3,11 +3,13 @@ import {View, Button, StyleSheet} from 'react-native';
 
 export default  class Home extends Component {
     render() {
+        const {navigation} = this.props;
+
         return <View>
             <Button
                 style={styles.button}
-                title="Go to AR"
-                onPress={this.props.onAr}
+                title='Go to AR'
+                onPress={() => navigation.navigate('AR')}
             />
         </View>
     }
