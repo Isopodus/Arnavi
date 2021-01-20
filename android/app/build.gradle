@@ -156,6 +156,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-heading')
     implementation project(':react-native-location')
     implementation project(':react-native-screens')
     implementation project(':react-native-safe-area-context')
