@@ -13,8 +13,8 @@ export default function Navigator() {
     return(
         <NavigationContainer>
             <Stack.Navigator>
-                <Stack.Screen name="Home" component={Home}/>
-                <Stack.Screen name="AR" component={ARNavigator}/>
+                <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
+                <Stack.Screen name="AR" component={ARNavigator} options={{headerShown: false}} />
             </Stack.Navigator>
         </NavigationContainer>
     )
