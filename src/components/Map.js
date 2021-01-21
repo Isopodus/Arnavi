@@ -6,13 +6,13 @@ export default function Map() {
         <MapView
             scrollEnabled={true}
             provider={PROVIDER_GOOGLE}
-            initialRegion={{
+            region={{
                 latitude: 37.78825,
                 longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
             }}
-            style={{height: 800, margin: 40}}
+            style={{height: 500, margin: 40}}
         />
     )
 }

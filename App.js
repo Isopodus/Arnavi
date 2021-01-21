@@ -12,10 +12,10 @@ function AppRoot() {
         StatusBar.setHidden(true);
     }, []);
     React.useEffect(() => {
-        let locationSubscription = null;
+        let locationSubscription;
 
         RNLocation.configure({
-            distanceFilter: 5.0
+            distanceFilter: 0.1
         });
 
         RNLocation.requestPermission({
