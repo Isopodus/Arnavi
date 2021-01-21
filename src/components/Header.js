@@ -1,20 +1,37 @@
 import React from 'react';
-import LinearGradient from 'react-native-linear-gradient';
-import { View } from 'react-native';
+import { View, Animated, Easing } from 'react-native';
 import getTheme from "../global/Style";
 import {Icon, Input} from "./index";
 
-export default function Header(props) {
+export default function Header() {
     const theme = getTheme();
-    const { containerStyle } = props;
     const styles = getStyles(getTheme());
+
     const [place, setPlace] = React.useState('');
+    const [searching, setSearching] = React.useState(false);
+    const fadeAnim = React.useRef(new Animated.Value(0)).current;
+
+    const onEndSearching = React.useCallback(() => {
+        Animated.timing(fadeAnim, {
+            toValue: 0,
+            easing: Easing.linear(),
+            duration: 300
+        }).start(() => setSearching(false));
+    }, [fadeAnim]);
+
+    React.useEffect(() => {
+        if (searching) {
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                easing: Easing.linear(),
+                duration: 300
+            }).start();
+        }
+    }, [searching, fadeAnim]);
+
     return(
-        <LinearGradient
-            colors={['rgba(0, 0, 0, 0.9)', 'rgba(0, 0, 0, 0)']}
-            style={[styles.container, containerStyle]}
-        >
-            <View style={theme.rowAlignedBetween}>
+        <React.Fragment>
+            <View style={styles.container}>
                 <Icon
                     name={'search'}
                     color={theme.textAccent}
@@ -27,6 +44,8 @@ export default function Header(props) {
                     placeholder={'Search for locations...'}
                     placeholderColor={theme.textAccent}
                     style={styles.searchText}
+                    onFocus={() => setSearching(true)}
+                    onBlur={onEndSearching}
                 />
                 <Icon
                     name={'star-border'}
@@ -35,17 +54,21 @@ export default function Header(props) {
                     style={{ flex: 0.1 }}
                 />
             </View>
-        </LinearGradient>
+            {searching && <Animated.View style={[styles.searchBackground, { opacity: fadeAnim }]} />}
+        </React.Fragment>
     )
 }
 
 function getStyles(theme) {
     return {
         container: {
-            ...theme.rowAlignedTop,
+            ...theme.rowAlignedBetween,
             flex: 1,
             paddingVertical: theme.scale(10),
-            paddingHorizontal: theme.scale(20)
+            paddingHorizontal: theme.scale(20),
+            position: 'absolute',
+            top: 0,
+            zIndex: 2,
         },
         searchText: [
             theme.textStyle({
@@ -57,6 +80,16 @@ function getStyles(theme) {
             {
                 flex: 0.9,
             }
+        ],
+        searchBackground: [
+            {
+                backgroundColor: theme.black,
+                position: 'absolute',
+                top: 0,
+                zIndex: 1,
+                flex: 1,
+            },
+            theme.fullScreen
         ]
     };
 }

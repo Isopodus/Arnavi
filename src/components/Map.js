@@ -1,12 +1,13 @@
 import React from 'react';
 import {Header, Icon, MapContainer} from "./index";
-import {View, TouchableOpacity } from "react-native";
+import {View, TouchableOpacity, Text } from "react-native";
 import getTheme from "../global/Style";
 import { useSelector } from 'react-redux';
+import LinearGradient from "react-native-linear-gradient";
 
 export default function Map() {
     const theme = getTheme();
-    const style = getStyles(theme);
+    const styles = getStyles(theme);
     const location = useSelector(state => state.location);
 
     let mapRef = React.useRef(null);
@@ -28,7 +29,11 @@ export default function Map() {
     return(
         <React.Fragment>
             <MapContainer onSetRef={(ref) => { mapRef = ref }} />
-            <Header containerStyle={style.header} />
+            <LinearGradient
+                colors={['rgba(0, 0, 0, 0.9)', 'rgba(0, 0, 0, 0)']}
+                style={styles.gradient}
+            />
+            <Header />
             <View style={{position: 'absolute', top: theme.scale(500), width: '100%'}}>
                 <TouchableOpacity onPress={onMoveToCurrentLocation}>
                     <Icon
@@ -44,11 +49,12 @@ export default function Map() {
 
 function getStyles(theme) {
     return {
-        header: {
+        gradient: {
+            flex: 1,
+            width: '100%',
+            height: theme.scale(300),
             position: 'absolute',
             top: 0,
-            width: '100%',
-            height: theme.scale(300)
         }
     }
 }

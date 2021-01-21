@@ -8,6 +8,7 @@ const colors = {
   textAccent: `#47cb78`,
   error: `#cb6347`,
   warning: `#ffa500`,
+  black: '#000'
 };
 
 const width = Dimensions.get('window').width;
@@ -122,7 +123,8 @@ const commonStyles = {
   rowAlignedTop: {
     flexDirection: 'row',
     alignItems: 'flex-start'
-  }
+  },
+  fullScreen: { width, height }
 };
 
 export default function getTheme() {

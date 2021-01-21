@@ -2,7 +2,15 @@ import React from 'react';
 import { TextInput, View } from 'react-native';
 
 export default function Input(props) {
-    const { value, setValue, placeholder, placeholderColor, style } = props;
+    const {
+        value,
+        setValue,
+        placeholder,
+        placeholderColor,
+        style,
+        onFocus,
+        onBlur
+    } = props;
     return(
         <TextInput
             style={style}
@@ -10,6 +18,8 @@ export default function Input(props) {
             onChangeText={setValue}
             placeholder={placeholder}
             placeholderTextColor={placeholderColor}
+            onFocus={onFocus}
+            onBlur={onBlur}
         />
     )
 }
