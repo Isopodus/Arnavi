@@ -118,6 +118,10 @@ const commonStyles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  rowAlignedTop: {
+    flexDirection: 'row',
+    alignItems: 'flex-start'
   }
 };
 

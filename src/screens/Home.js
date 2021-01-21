@@ -16,7 +16,6 @@ export default function Home() {
             {/*    title='Go to AR'*/}
             {/*    onPress={() => navigate('AR')}*/}
             {/*/>*/}
-            <Header containerStyle={{ position: 'absolute', top: 0, width: '100%'}} />
         </React.Fragment>
     )
 }
