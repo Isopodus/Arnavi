@@ -7,7 +7,7 @@ import { store, setAction } from "./src/store";
 
 function AppRoot() {
     const dispatch = useDispatch();
-    const location = useSelector((state) => state.location)
+    const location = useSelector((state) => state.location);
 
     React.useEffect(() => {
         StatusBar.setHidden(true);
@@ -49,9 +49,9 @@ function AppRoot() {
         return locationSubscription && locationSubscription();
     }, []);
     return(
-        <>
+        <React.Fragment>
             <Navigator/>
-        </>
+        </React.Fragment>
     )
 }
 

@@ -1,7 +1,11 @@
 import React from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import style from '../assets/map/style';
+import getTheme from '../global/Style';
 
-export default function Map() {
+export default function Map(props) {
+    const { fullscreen = true } = props;
+    const theme = getTheme();
     return(
         <MapView
             scrollEnabled={true}
@@ -12,7 +16,8 @@ export default function Map() {
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}
-            style={{height: 500, margin: 40}}
+            style={fullscreen && { height: '100%' }}
+            customMapStyle={style}
         />
     )
 }

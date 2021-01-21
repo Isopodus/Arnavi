@@ -1,23 +1,27 @@
 import React from 'react';
-import {View, Button, StyleSheet} from 'react-native';
-import { Map } from '../components';
+import {View, Button, Text} from 'react-native';
+import { Map, Header, Icon } from '../components';
 import { useNavigation } from '@react-navigation/native';
+import getTheme from "../global/Style";
 
 export default function Home() {
-    const navigation = useNavigation();
+    const { navigate } = useNavigation();
+    const theme = getTheme();
+    const styles = getStyles(theme);
 
     return (
-        <View>
-            <Map/>
-            <Button
-                style={styles.button}
-                title='Go to AR'
-                onPress={() => navigation.navigate('AR')}
-            />
-        </View>
+        <React.Fragment>
+            <Map />
+            {/*<Button*/}
+            {/*    title='Go to AR'*/}
+            {/*    onPress={() => navigate('AR')}*/}
+            {/*/>*/}
+            <Header containerStyle={{ position: 'absolute', top: 0, width: '100%'}} />
+        </React.Fragment>
     )
 }
 
-const styles = StyleSheet.create({
-
-});
+function getStyles(theme) {
+    return {
+    };
+}
