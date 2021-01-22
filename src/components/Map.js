@@ -4,13 +4,17 @@ import {View, TouchableOpacity, Text } from "react-native";
 import getTheme from "../global/Style";
 import { useSelector } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
+import { getPlaceDetail } from '../utils/Geolocation';
 
 export default function Map() {
     const theme = getTheme();
     const styles = getStyles(theme);
-    const location = useSelector(state => state.location);
+    const {token, location} = useSelector(state => state);
+
+    const [selectedPlace, setSelectedPlace] = React.useState(null);
 
     let mapRef = React.useRef(null);
+
     const onMoveToCurrentLocation = React.useCallback(() => {
         const { lat, lng } = location;
         if (lat && lng) {
@@ -19,21 +23,45 @@ export default function Map() {
                 latitude: lat,
                 latitudeDelta: 0.01250270688370961,
                 longitudeDelta: 0.01358723958820065,
-            }, 1000);
+            }, 1200);
         }
     }, [location, mapRef]);
+    const onMoveToLocation = React.useCallback((coords) => {
+        mapRef && mapRef.animateToRegion({
+            longitude: coords.lng,
+            latitude: coords.lat,
+            latitudeDelta: 0.01250270688370961,
+            longitudeDelta: 0.01358723958820065,
+        }, 1200);
+    }, [mapRef]);
 
     React.useEffect(() => {
         onMoveToCurrentLocation();
     }, [location, mapRef]);
+
+    React.useEffect(() => {
+        console.log(selectedPlace)
+        if (selectedPlace) {
+            getPlaceDetail(selectedPlace, token)
+                .then(res => {
+                    if (res.status === 200) {
+                        const { geometry } = res.result;
+                        onMoveToLocation(
+                            { lat: geometry.location.lat, lng: geometry.location.lng }
+                        );
+                    }
+                });
+        }
+    }, [selectedPlace, token]);
+
     return(
         <React.Fragment>
             <MapContainer onSetRef={(ref) => { mapRef = ref }} />
             <LinearGradient
-                colors={['rgba(0, 0, 0, 0.9)', 'rgba(0, 0, 0, 0)']}
+                colors={['rgba(13, 13, 13, 1)', 'rgba(13, 13, 13, 0)']}
                 style={styles.gradient}
             />
-            <Header />
+            <Header onSelectPlace={setSelectedPlace} />
             <View style={{position: 'absolute', top: theme.scale(500), width: '100%'}}>
                 <TouchableOpacity onPress={onMoveToCurrentLocation}>
                     <Icon

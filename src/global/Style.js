@@ -8,7 +8,7 @@ const colors = {
   textAccent: `#47cb78`,
   error: `#cb6347`,
   warning: `#ffa500`,
-  black: '#000'
+  black: '#0d0d0d'
 };
 
 const width = Dimensions.get('window').width;

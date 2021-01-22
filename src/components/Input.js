@@ -9,10 +9,12 @@ export default function Input(props) {
         placeholderColor,
         style,
         onFocus,
-        onBlur
+        onBlur,
+        onSetRef
     } = props;
     return(
         <TextInput
+            ref={(input) => onSetRef(input)}
             style={style}
             value={value}
             onChangeText={setValue}

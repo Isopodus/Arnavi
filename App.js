@@ -1,21 +1,17 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import Navigator from "./src/Navigator";
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import RNLocation from "react-native-location";
-import { store, setAction } from "./src/store";
+import { store, setAction, cleanAction } from "./src/store";
+import UUIDGenerator from 'react-native-uuid-generator';
 
 function AppRoot() {
     const dispatch = useDispatch();
-    const location = useSelector((state) => state.location);
 
     React.useEffect(() => {
         StatusBar.setHidden(true);
     }, []);
-
-    React.useEffect(() => {
-        console.log('LOCATION', location)
-    }, [location]);
 
     React.useEffect(() => {
         let locationSubscription;
@@ -48,6 +44,15 @@ function AppRoot() {
 
         return locationSubscription && locationSubscription();
     }, []);
+
+    React.useEffect(() => {
+        UUIDGenerator.getRandomUUID((uuid) => {
+            dispatch(setAction('token', uuid));
+        });
+
+        return dispatch(cleanAction('token'));
+    }, []);
+
     return(
         <React.Fragment>
             <Navigator/>
