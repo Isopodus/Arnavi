@@ -111,10 +111,10 @@ export default function Header() {
                     <Animated.View style={[styles.searchList, { opacity: fadeBackground }]}>
                         {placesList.length !== 0 && placesList.map((place, idx) => {
                             return(
-                                <React.Fragment>
+                                <React.Fragment key={idx}>
                                     <TouchableOpacity
                                         style={theme.rowAlignedBetween}
-                                        onPress={() => onSelect(place)} key={idx}
+                                        onPress={() => onSelect(place)}
                                     >
                                         <Icon
                                             name={'arrow-up-left'}

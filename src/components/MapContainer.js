@@ -6,13 +6,13 @@ export default function MapContainer(props) {
     const { fullscreen = true, onSetRef, pins } = props;
 
     const markers = React.useMemo(() => {
-        return pins.map((pin) => {
-            const { color, location, place_id } = pin;
+        return pins.map((pin, idx) => {
+            const { color, location } = pin;
             return(
                 <Marker
                     pinColor={color}
                     coordinate={{ latitude: location.lat, longitude: location.lng }}
-                    key={place_id}
+                    key={idx}
                 />
             )
         });

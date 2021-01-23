@@ -75,7 +75,7 @@ export default function Map() {
                     }
                 });
         }
-    }, [selectedPlace, token]);
+    }, [selectedPlace.placeId, token]);
 
     return(
         <React.Fragment>
