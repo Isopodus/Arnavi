@@ -111,20 +111,26 @@ export default function Header() {
                     <Animated.View style={[styles.searchList, { opacity: fadeBackground }]}>
                         {placesList.length !== 0 && placesList.map((place, idx) => {
                             return(
-                                <TouchableOpacity style={theme.rowAlignedBetween} onPress={() => onSelect(place)} key={idx}>
-                                    <Icon
-                                        name={'arrow-up-left'}
-                                        color={theme.textAccent}
-                                        size={theme.scale(22)}
-                                        style={{ flex: 0.1 }}
-                                    />
-                                    <Text style={styles.placeText} numberOfLines={2} ellipsizeMode='tail'>
-                                        {place.description}
-                                    </Text>
-                                    <Text style={styles.distanceText}>
-                                        {convertDistance(place.distance_meters)}
-                                    </Text>
-                                </TouchableOpacity>
+                                <React.Fragment>
+                                    <TouchableOpacity
+                                        style={theme.rowAlignedBetween}
+                                        onPress={() => onSelect(place)} key={idx}
+                                    >
+                                        <Icon
+                                            name={'arrow-up-left'}
+                                            color={theme.textAccent}
+                                            size={theme.scale(22)}
+                                            style={{ flex: 0.1 }}
+                                        />
+                                        <Text style={styles.placeText} numberOfLines={2} ellipsizeMode='tail'>
+                                            {place.description}
+                                        </Text>
+                                        <Text style={styles.distanceText}>
+                                            {convertDistance(place.distance_meters)}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <Separator />
+                                </React.Fragment>
                             )
                         })}
                     </Animated.View>
@@ -170,7 +176,7 @@ function getStyles(theme) {
         ],
         searchBackground: [
             {
-                backgroundColor: theme.white,
+                backgroundColor: theme.black,
                 position: 'absolute',
                 top: 0,
                 zIndex: 1,
