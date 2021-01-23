@@ -1,23 +1,18 @@
 import React from 'react';
-import {View, Button, StyleSheet} from 'react-native';
+import { Button } from 'react-native';
 import { Map } from '../components';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Home() {
-    const navigation = useNavigation();
+    const { navigate } = useNavigation();
 
     return (
-        <View>
-            <Map/>
+        <React.Fragment>
+            <Map />
             <Button
-                style={styles.button}
                 title='Go to AR'
-                onPress={() => navigation.navigate('AR')}
+                onPress={() => navigate('AR')}
             />
-        </View>
+        </React.Fragment>
     )
 }
-
-const styles = StyleSheet.create({
-
-});

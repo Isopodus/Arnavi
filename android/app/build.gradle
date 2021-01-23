@@ -77,6 +77,7 @@ project.ext.react = [
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -157,6 +158,9 @@ android {
 
 dependencies {
     implementation project(':react-native-heading')
+    implementation project(':react-native-uuid-generator')
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-linear-gradient')
     implementation project(':react-native-location')
     implementation project(':react-native-screens')
     implementation project(':react-native-safe-area-context')

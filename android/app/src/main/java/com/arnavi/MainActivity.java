@@ -5,6 +5,9 @@ import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
+import android.os.Bundle;
+import android.view.View;
+
 public class MainActivity extends ReactActivity {
 
     /**
