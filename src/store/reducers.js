@@ -22,7 +22,7 @@ export default function reducers(state = initialState, action) {
       const { payload } = action;
       let { selectedPlace } = state;
 
-      selectedPlace = { ...selectedPlace, payload };
+      selectedPlace = { ...selectedPlace, ...payload };
 
       return { ...state, selectedPlace };
     }

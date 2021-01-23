@@ -11,7 +11,7 @@ export default function Map() {
     const styles = getStyles(theme);
     const {token, userLocation, selectedPlace} = useSelector(state => state);
 
-    let mapRef = React.useRef(null);
+    let mapRef = null;
 
     const onMoveToCurrentLocation = React.useCallback(() => {
         console.log('onMoveToCurrentLocation', userLocation)
@@ -26,6 +26,7 @@ export default function Map() {
         }
     }, [userLocation, mapRef]);
     const onMoveToLocation = React.useCallback((coords) => {
+        console.log('onMoveToLocation', coords, mapRef)
         mapRef && mapRef.animateToRegion({
             longitude: coords.lng,
             latitude: coords.lat,
@@ -39,16 +40,16 @@ export default function Map() {
     }, [userLocation]);
 
     React.useEffect(() => {
-        if (selectedPlace.place_id) {
-            // getPlaceDetail(selectedPlace.place_id, token)
-            //     .then(res => {
-            //         if (res.status === 200) {
-            //             const { geometry } = res.result;
-            //             onMoveToLocation(
-            //                 { lat: geometry.location.lat, lng: geometry.location.lng }
-            //             );
-            //         }
-            //     });
+        if (selectedPlace.placeId) {
+            getPlaceDetail(selectedPlace.placeId, token)
+                .then(res => {
+                    if (res.status === 200) {
+                        const { geometry } = res.data.result;
+                        onMoveToLocation(
+                            { lat: geometry.location.lat, lng: geometry.location.lng }
+                        );
+                    }
+                });
         }
     }, [selectedPlace, token]);
 

@@ -42,7 +42,7 @@ export default function Header() {
     const onSelect = React.useCallback((place) => {
         setPlacesList([]);
         onEndSearching();
-        dispatch(setAction('place'), { placeId: place.place_id });
+        dispatch(setAction('place', { placeId: place.place_id }));
     }, []);
 
     React.useEffect(() => {
@@ -109,9 +109,9 @@ export default function Header() {
             {searching && (
                 <React.Fragment>
                     <Animated.View style={[styles.searchList, { opacity: fadeBackground }]}>
-                        {placesList.length !== 0 && placesList.map((place) => {
+                        {placesList.length !== 0 && placesList.map((place, idx) => {
                             return(
-                                <TouchableOpacity style={theme.rowAlignedBetween} onPress={() => onSelect(place)}>
+                                <TouchableOpacity style={theme.rowAlignedBetween} onPress={() => onSelect(place)} key={idx}>
                                     <Icon
                                         name={'arrow-up-left'}
                                         color={theme.textAccent}

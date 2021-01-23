@@ -49,8 +49,6 @@ function AppRoot() {
         UUIDGenerator.getRandomUUID((uuid) => {
             dispatch(setAction('token', uuid));
         });
-
-        return dispatch(cleanAction('token'));
     }, []);
 
     return(
