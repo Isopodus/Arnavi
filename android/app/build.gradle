@@ -158,10 +158,10 @@ android {
 
 dependencies {
     implementation project(':react-native-heading')
+    implementation project(':@react-native-community_geolocation')
     implementation project(':react-native-uuid-generator')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-linear-gradient')
-    implementation project(':react-native-location')
     implementation project(':react-native-screens')
     implementation project(':react-native-safe-area-context')
     implementation project(':react-native-gesture-handler')
