@@ -2,48 +2,27 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import Navigator from "./src/Navigator";
 import { Provider, useDispatch } from 'react-redux';
-import RNLocation from "react-native-location";
-import { store, setAction, cleanAction } from "./src/store";
+import { store, setAction } from "./src/store";
 import UUIDGenerator from 'react-native-uuid-generator';
+import Geolocation from '@react-native-community/geolocation';
 
 function AppRoot() {
     const dispatch = useDispatch();
 
+    // Hide status bar
     React.useEffect(() => {
         StatusBar.setHidden(true);
     }, []);
 
+    // Set geolocation callbacks
     React.useEffect(() => {
-        let locationSubscription;
-
-        RNLocation.configure({
-            distanceFilter: 1,
-            desiredAccuracy: {
-                ios: "best",
-                android: "highAccuracy"
-            },
-            interval: 5000,
+        Geolocation.getCurrentPosition(info => {
+            const {longitude, latitude} = info.coords;
+            dispatch(setAction('location', {lat: latitude, lng: longitude}));
         });
-
-        RNLocation.requestPermission({
-            ios: "whenInUse",
-            android: {
-                detail: "fine",
-            }
-        }).then(granted => {
-            if (granted) {
-                locationSubscription = RNLocation.subscribeToLocationUpdates(
-                    locations => {
-                        const {latitude, longitude} = locations[0];
-                        dispatch(setAction('location', {lat: latitude, lng: longitude}));
-                    }
-                );
-            }
-        });
-
-        return locationSubscription && locationSubscription();
     }, []);
 
+    // Generate session token
     React.useEffect(() => {
         UUIDGenerator.getRandomUUID((uuid) => {
             dispatch(setAction('token', uuid));
