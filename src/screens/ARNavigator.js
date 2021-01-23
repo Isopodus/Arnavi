@@ -18,9 +18,10 @@ class ARNavigator extends Component {
     constructor() {
         super();
 
+        this.updateInitialHeading = true;
         this.state = {
             heading: 0,
-            initialHeading: null,
+            initialHeading: 0,
         };
     }
 
@@ -38,10 +39,18 @@ class ARNavigator extends Component {
             data = (data + 360) % 360;
             this.setState({
                 heading: data,
-                initialHeading: initialHeading === null ? data : initialHeading
+                initialHeading: this.updateInitialHeading ? data : initialHeading
             });
+            if (this.updateInitialHeading) this.updateInitialHeading = false;
         });
 
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.userLocation !== this.props.userLocation)
+        {
+            this.updateInitialHeading = true;
+        }
     }
 
     componentWillUnmount() {
