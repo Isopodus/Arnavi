@@ -1,11 +1,11 @@
 
 // Get distance between two geo coords
 export const calcCrow = (lat1, lon1, lat2, lon2) => {
-    const R = 6371; // km
-    const dLat = this.rad(lat2-lat1);
-    const dLon = this.rad(lon2-lon1);
-    lat1 = this.rad(lat1);
-    lat2 = this.rad(lat2);
+    const R = 6371000; // km
+    const dLat = rad(lat2-lat1);
+    const dLon = rad(lon2-lon1);
+    lat1 = rad(lat1);
+    lat2 = rad(lat2);
 
     const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
         Math.sin(dLon/2) * Math.sin(dLon/2) * Math.cos(lat1) * Math.cos(lat2);

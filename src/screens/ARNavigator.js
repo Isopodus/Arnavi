@@ -6,13 +6,14 @@ const ReactNativeHeading = require('react-native-heading');
 
 import {
     ViroARScene,
-    ViroBox,
     ViroMaterials,
 } from 'react-viro';
 
-import {rotatePoint} from '../utils/Coordinates';
+import {rotatePoint, calcCrow, bearing} from '../utils/Coordinates';
+import ARWaypointMarker from "../components/ARWaypointMarker";
+import { connect } from 'react-redux';
 
-export default class ARNavigator extends Component {
+class ARNavigator extends Component {
 
     constructor() {
         super();
@@ -26,6 +27,7 @@ export default class ARNavigator extends Component {
     componentDidMount() {
         ReactNativeHeading.start(1)
             .then(didStart => {
+                console.log(didStart);
                 this.setState({
                     headingIsSupported: didStart,
                 })
@@ -49,40 +51,32 @@ export default class ARNavigator extends Component {
 
     render() {
         const {heading, initialHeading} = this.state;
-        console.log(heading, initialHeading);
 
-        const point = [0, 0, -0.7]; // 70cm in front
+        const lat2 = 47.90889185800383, lon2 = 33.34779564378661;
+        const {lat, lng} = this.props.userLocation;
 
+        const distance = calcCrow(lat, lng, lat2, lon2);
+        const angle = bearing(lat, lng, lat2, lon2);
+
+        const point = [0, 0, distance];
         let newPoint = null;
         if (initialHeading !== null) {
-            newPoint = rotatePoint(point, initialHeading-180);
+            newPoint = rotatePoint(point, initialHeading + angle);
         }
 
         return (
             <ViroARScene>
-                {newPoint && <ViroBox
-                    height={0.1}
-                    length={0.1}
-                    width={0.1}
-                    scale={[0.3, 0.3, 0.3]}
-                    materials={["arrow"]}
-                    position={newPoint}
-                    rotation={[0, 0, 0]}/>
-                }
+                {newPoint && <ARWaypointMarker point={newPoint}/>}
             </ViroARScene>
         );
     }
 }
 
-let styles = StyleSheet.create({
-    helloWorldTextStyle: {
-        fontFamily: 'Arial',
-        fontSize: 40,
-        color: '#ffffff',
-        textAlignVertical: 'center',
-        textAlign: 'center',
-    },
+const mapStateToProps = state => ({
+    userLocation: state.userLocation
 });
+
+export default connect(mapStateToProps, null)(ARNavigator);
 
 ViroMaterials.createMaterials({
     arrow: {
