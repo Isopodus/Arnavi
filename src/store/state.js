@@ -1,9 +1,17 @@
 const initialState = {
-  location: {
+  userLocation: {
     lat: null,
     lng: null
   },
-  token: null
+  token: null,
+  selectedPlace: {
+    placeId: null,
+    address: null,
+    location: {
+      lat: null,
+      lng: null
+    }
+  }
 };
 
 export default initialState;

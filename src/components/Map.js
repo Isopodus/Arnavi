@@ -9,14 +9,13 @@ import { getPlaceDetail } from '../utils/Geolocation';
 export default function Map() {
     const theme = getTheme();
     const styles = getStyles(theme);
-    const {token, location} = useSelector(state => state);
-
-    const [selectedPlace, setSelectedPlace] = React.useState(null);
+    const {token, userLocation, selectedPlace} = useSelector(state => state);
 
     let mapRef = React.useRef(null);
 
     const onMoveToCurrentLocation = React.useCallback(() => {
-        const { lat, lng } = location;
+        console.log('onMoveToCurrentLocation', userLocation)
+        const { lat, lng } = userLocation;
         if (lat && lng) {
             mapRef && mapRef.animateToRegion({
                 longitude: lng,
@@ -25,7 +24,7 @@ export default function Map() {
                 longitudeDelta: 0.01358723958820065,
             }, 1200);
         }
-    }, [location, mapRef]);
+    }, [userLocation, mapRef]);
     const onMoveToLocation = React.useCallback((coords) => {
         mapRef && mapRef.animateToRegion({
             longitude: coords.lng,
@@ -37,20 +36,19 @@ export default function Map() {
 
     React.useEffect(() => {
         onMoveToCurrentLocation();
-    }, [location, mapRef]);
+    }, [userLocation]);
 
     React.useEffect(() => {
-        console.log(selectedPlace)
-        if (selectedPlace) {
-            getPlaceDetail(selectedPlace, token)
-                .then(res => {
-                    if (res.status === 200) {
-                        const { geometry } = res.result;
-                        onMoveToLocation(
-                            { lat: geometry.location.lat, lng: geometry.location.lng }
-                        );
-                    }
-                });
+        if (selectedPlace.place_id) {
+            // getPlaceDetail(selectedPlace.place_id, token)
+            //     .then(res => {
+            //         if (res.status === 200) {
+            //             const { geometry } = res.result;
+            //             onMoveToLocation(
+            //                 { lat: geometry.location.lat, lng: geometry.location.lng }
+            //             );
+            //         }
+            //     });
         }
     }, [selectedPlace, token]);
 
@@ -61,7 +59,7 @@ export default function Map() {
                 colors={['rgba(13, 13, 13, 1)', 'rgba(13, 13, 13, 0)']}
                 style={styles.gradient}
             />
-            <Header onSelectPlace={setSelectedPlace} />
+            <Header />
             <View style={{position: 'absolute', top: theme.scale(500), width: '100%'}}>
                 <TouchableOpacity onPress={onMoveToCurrentLocation}>
                     <Icon

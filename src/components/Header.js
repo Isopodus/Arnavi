@@ -3,7 +3,8 @@ import { View, Animated, Easing, TouchableOpacity, Text, FlatList } from 'react-
 import getTheme from "../global/Style";
 import {Icon, Input} from "./index";
 import { searchPlace } from '../utils/Geolocation';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAction } from "../store";
 
 const convertDistance = (m) => {
     const km = m / 1000;
@@ -18,11 +19,11 @@ const Separator = () => {
     )
 };
 
-export default function Header(props) {
-    const { onSelectPlace } = props;
+export default function Header() {
     const theme = getTheme();
     const styles = getStyles(getTheme());
-    const {token, location} = useSelector(state => state);
+    const {token, userLocation} = useSelector(state => state);
+    const dispatch = useDispatch();
 
     const [text, setText] = React.useState('');
     const [searching, setSearching] = React.useState(false);
@@ -40,8 +41,8 @@ export default function Header(props) {
     }, [fadeBackground, inputRef]);
     const onSelect = React.useCallback((place) => {
         setPlacesList([]);
-        onSelectPlace(place.place_id);
         onEndSearching();
+        dispatch(setAction('place'), { placeId: place.place_id });
     }, []);
 
     React.useEffect(() => {
@@ -55,7 +56,7 @@ export default function Header(props) {
     }, [searching, fadeBackground]);
     React.useEffect(() => {
         if (text !== '') {
-            searchPlace(text, token, location)
+            searchPlace(text, token, userLocation)
                 .then(res => {
                     if (res.status === 200) {
                         const { data } = res;
@@ -63,7 +64,7 @@ export default function Header(props) {
                     }
                 });
         }
-    }, [text, token]);
+    }, [text, token, userLocation]);
 
     return(
         <React.Fragment>
@@ -108,30 +109,24 @@ export default function Header(props) {
             {searching && (
                 <React.Fragment>
                     <Animated.View style={[styles.searchList, { opacity: fadeBackground }]}>
-                        <FlatList
-                            style={{ flex: 1 }}
-                            data={placesList}
-                            renderItem={({ item }) => {
-                                return(
-                                    <TouchableOpacity style={theme.rowAlignedBetween} onPress={() => onSelect(item)}>
-                                        <Icon
-                                            name={'arrow-up-left'}
-                                            color={theme.textAccent}
-                                            size={theme.scale(22)}
-                                            style={{ flex: 0.1 }}
-                                        />
-                                        <Text style={styles.placeText} numberOfLines={2} ellipsizeMode='tail'>
-                                            {item.description}
-                                        </Text>
-                                        <Text style={styles.distanceText}>
-                                            {convertDistance(item.distance_meters)}
-                                        </Text>
-                                    </TouchableOpacity>
-                                )
-                            }}
-                            keyExtractor={item => item.id}
-                            ItemSeparatorComponent={Separator}
-                        />
+                        {placesList.length !== 0 && placesList.map((place) => {
+                            return(
+                                <TouchableOpacity style={theme.rowAlignedBetween} onPress={() => onSelect(place)}>
+                                    <Icon
+                                        name={'arrow-up-left'}
+                                        color={theme.textAccent}
+                                        size={theme.scale(22)}
+                                        style={{ flex: 0.1 }}
+                                    />
+                                    <Text style={styles.placeText} numberOfLines={2} ellipsizeMode='tail'>
+                                        {place.description}
+                                    </Text>
+                                    <Text style={styles.distanceText}>
+                                        {convertDistance(place.distance_meters)}
+                                    </Text>
+                                </TouchableOpacity>
+                            )
+                        })}
                     </Animated.View>
                     <Animated.View style={[styles.searchBackground, { opacity: fadeBackground }]} />
                 </React.Fragment>
@@ -175,7 +170,7 @@ function getStyles(theme) {
         ],
         searchBackground: [
             {
-                backgroundColor: theme.black,
+                backgroundColor: theme.white,
                 position: 'absolute',
                 top: 0,
                 zIndex: 1,
