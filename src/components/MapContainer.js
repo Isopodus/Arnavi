@@ -5,7 +5,6 @@ import getTheme from '../global/Style';
 
 export default function MapContainer(props) {
     const { fullscreen = true, onSetRef } = props;
-    const theme = getTheme();
     return(
         <MapView
             ref={(map) => onSetRef(map)}
@@ -19,7 +18,7 @@ export default function MapContainer(props) {
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}
-            style={fullscreen && { height: '100%' }}
+            style={fullscreen && { height: '95%' }}
             customMapStyle={style}
         />
     )
