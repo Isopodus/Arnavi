@@ -17,19 +17,18 @@ function AppRoot() {
         let locationSubscription;
 
         RNLocation.configure({
+            distanceFilter: 1,
+            desiredAccuracy: {
+                ios: "best",
+                android: "highAccuracy"
+            },
             interval: 5000,
         });
 
         RNLocation.requestPermission({
             ios: "whenInUse",
             android: {
-                detail: "coarse",
-                rationale: {
-                    title: "Location permission",
-                    message: "We use your location to demo the library",
-                    buttonPositive: "OK",
-                    buttonNegative: "Cancel"
-                }
+                detail: "fine",
             }
         }).then(granted => {
             if (granted) {

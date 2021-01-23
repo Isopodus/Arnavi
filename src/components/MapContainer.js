@@ -12,7 +12,7 @@ export default function MapContainer(props) {
             showsMyLocationButton={false}
             scrollEnabled={true}
             provider={PROVIDER_GOOGLE}
-            region={{
+            initialRegion={{
                 latitude: 0,
                 longitude: 0,
                 latitudeDelta: 0.015,

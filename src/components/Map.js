@@ -10,8 +10,7 @@ export default function Map() {
     const theme = getTheme();
     const styles = getStyles(theme);
     const {token, userLocation, selectedPlace} = useSelector(state => state);
-
-    let mapRef = null;
+    const [mapRef, setMapRef] = React.useState(null);
 
     const onMoveToCurrentLocation = React.useCallback(() => {
         console.log('onMoveToCurrentLocation', userLocation)
@@ -26,7 +25,7 @@ export default function Map() {
         }
     }, [userLocation, mapRef]);
     const onMoveToLocation = React.useCallback((coords) => {
-        console.log('onMoveToLocation', coords, mapRef)
+        console.log('onMoveToLocation', coords)
         mapRef && mapRef.animateToRegion({
             longitude: coords.lng,
             latitude: coords.lat,
@@ -55,7 +54,7 @@ export default function Map() {
 
     return(
         <React.Fragment>
-            <MapContainer onSetRef={(ref) => { mapRef = ref }} />
+            <MapContainer onSetRef={(ref) => setMapRef(ref)} />
             <LinearGradient
                 colors={['rgba(13, 13, 13, 1)', 'rgba(13, 13, 13, 0)']}
                 style={styles.gradient}
