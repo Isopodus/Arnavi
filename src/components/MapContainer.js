@@ -31,7 +31,7 @@ export default function MapContainer(props) {
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}
-            style={fullscreen && { height: '95%' }}
+            style={fullscreen && { height: '100%' }}
             customMapStyle={style}
         >
             {markers}

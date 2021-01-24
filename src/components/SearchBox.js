@@ -19,7 +19,7 @@ const Separator = () => {
     )
 };
 
-export default function Header() {
+export default function SearchBox() {
     const theme = getTheme();
     const styles = getStyles(getTheme());
     const {token, userLocation} = useSelector(state => state);
