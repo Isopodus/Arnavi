@@ -11,7 +11,8 @@ const initialState = {
       lat: null,
       lng: null
     }
-  }
+  },
+  recentLocations: []
 };
 
 export default initialState;

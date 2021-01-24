@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
 
-const iconsMaterialIcons = ['my-location', 'search', 'star-border', 'arrow-back'];
+const iconsMaterialIcons = ['my-location', 'search', 'star-border', 'arrow-back', 'access-time', 'close'];
 const iconFeatherIcons = ['arrow-up-left'];
 
 const selectIcon = (name) => {

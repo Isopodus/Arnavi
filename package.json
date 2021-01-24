@@ -8,6 +8,7 @@
     "postinstall": "npx jetifier"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.3",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.9.0",

@@ -1,15 +1,20 @@
 import React from 'react';
-import { View, Animated, Easing, TouchableOpacity, Text, FlatList } from 'react-native';
+import { View, Animated, Easing, TouchableOpacity, Text, Keyboard } from 'react-native';
 import getTheme from "../global/Style";
 import {Icon, Input} from "./index";
-import { searchPlace } from '../utils/Geolocation';
+import {searchPlace} from '../utils/Geolocation';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAction } from "../store";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const convertDistance = (m) => {
-    const km = m / 1000;
-    if (km < 0.5) return `${m} m`;
-    else return `${Math.round(km)} km`;
+    if (m) {
+        const km = m / 1000;
+        if (km < 0.5) return `${m} m`;
+        else if (km > 9999) return '';
+        else return `${Math.round(km)} km`;
+    }
+    else return '';
 };
 
 const Separator = () => {
@@ -22,29 +27,60 @@ const Separator = () => {
 export default function SearchBox() {
     const theme = getTheme();
     const styles = getStyles(getTheme());
-    const {token, userLocation} = useSelector(state => state);
+    const {token, userLocation, recentLocations} = useSelector(state => state);
     const dispatch = useDispatch();
 
     const [text, setText] = React.useState('');
     const [searching, setSearching] = React.useState(false);
     const [placesList, setPlacesList] = React.useState([]);
+    const [recentPlacesList, setRecentPlacesList] = React.useState([]);
 
     let inputRef = React.useRef(null);
     const fadeBackground = React.useRef(new Animated.Value(0)).current;
 
     const onEndSearching = React.useCallback(() => {
+        Keyboard.dismiss();
+        setText('');
         Animated.timing(fadeBackground, {
             toValue: 0,
             easing: Easing.linear(),
             duration: 300
         }).start(() => setSearching(false));
     }, [fadeBackground, inputRef]);
-    const onSelect = React.useCallback((place) => {
+    const onSelect = React.useCallback((place, recent = false) => {
         setPlacesList([]);
         onEndSearching();
-        dispatch(setAction('place', { placeId: place.place_id }));
-    }, []);
 
+        if (recent) {
+            dispatch(setAction('place', { placeId: place.placeId }));
+        }
+        else {
+            const { place_id, description } = place;
+            const data = { placeId: place_id, address: description };
+
+            if (recentLocations.includes(data)) {
+                dispatch(setAction('place', { placeId: place_id }));
+            }
+            else {
+                AsyncStorage.setItem(
+                    '@history',
+                    JSON.stringify(
+                        recentLocations.length === 6
+                            ? [...recentLocations.slice(1), data]
+                            : [...recentLocations, data]
+                    )
+                ).then(() => {
+                    setRecentPlacesList(prev => [...prev, data]);
+                    dispatch(setAction('place', { placeId: place_id }));
+                    dispatch(setAction('history', data));
+                });
+            }
+        }
+    }, [recentLocations]);
+
+    React.useEffect(() => {
+        if (recentLocations.length !== 0) setRecentPlacesList(recentLocations);
+    }, [recentLocations]);
     React.useEffect(() => {
         if (searching) {
             Animated.timing(fadeBackground, {
@@ -64,6 +100,7 @@ export default function SearchBox() {
                     }
                 });
         }
+        else setPlacesList([]);
     }, [text, token, userLocation]);
 
     return(
@@ -99,16 +136,36 @@ export default function SearchBox() {
                     onFocus={() => setSearching(true)}
                     onBlur={onEndSearching}
                 />
-                <Icon
-                    name={'star-border'}
-                    color={theme.textAccent}
-                    size={theme.scale(22)}
-                    style={{ flex: 0.1 }}
-                />
+                {text !== ''
+                    ? (
+                        <TouchableOpacity onPress={() => setText('')}>
+                            <Icon
+                                name={'close'}
+                                color={theme.textAccent}
+                                size={theme.scale(20)}
+                                style={{ flex: 0.1, margin: theme.scale(2) }}
+                            />
+                        </TouchableOpacity>
+                    )
+                    : (
+                        <Icon
+                            name={'star-border'}
+                            color={theme.textAccent}
+                            size={theme.scale(22)}
+                            style={{ flex: 0.1 }}
+                        />
+                    )
+                }
             </View>
             {searching && (
                 <React.Fragment>
                     <Animated.View style={[styles.searchList, { opacity: fadeBackground }]}>
+                        <Text style={styles.placeholder}>
+                            {`${text !== '' ? 'Top' : 'Last'} locations:`}
+                        </Text>
+                        {(placesList.length === 0 && text === '' && recentPlacesList.length === 0) && (
+                            <Text style={styles.secondaryPlaceholder}>No recent locations</Text>
+                        )}
                         {placesList.length !== 0 && placesList.map((place, idx) => {
                             return(
                                 <React.Fragment key={idx}>
@@ -122,11 +179,40 @@ export default function SearchBox() {
                                             size={theme.scale(22)}
                                             style={{ flex: 0.1 }}
                                         />
-                                        <Text style={styles.placeText} numberOfLines={2} ellipsizeMode='tail'>
+                                        <Text
+                                            style={[styles.placeText, { flex: 0.8 }]}
+                                            numberOfLines={2}
+                                            ellipsizeMode='tail'
+                                        >
                                             {place.description}
                                         </Text>
                                         <Text style={styles.distanceText}>
                                             {convertDistance(place.distance_meters)}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <Separator />
+                                </React.Fragment>
+                            )
+                        })}
+                        {placesList.length === 0 && recentPlacesList.reverse().map((place, idx) => {
+                            return(
+                                <React.Fragment key={idx}>
+                                    <TouchableOpacity
+                                        style={theme.rowAlignedBetween}
+                                        onPress={() => onSelect(place, true)}
+                                    >
+                                        <Icon
+                                            name={'access-time'}
+                                            color={theme.textAccent}
+                                            size={theme.scale(22)}
+                                            style={{ flex: 0.1 }}
+                                        />
+                                        <Text
+                                            style={[styles.placeText, { flex: 0.9 }]}
+                                            numberOfLines={2}
+                                            ellipsizeMode='tail'
+                                        >
+                                            {place.address}
                                         </Text>
                                     </TouchableOpacity>
                                     <Separator />
@@ -155,6 +241,7 @@ function getStyles(theme) {
             height: theme.scale(60)
         },
         searchList: {
+            ...theme.rowAlignedVertical,
             flex: 1,
             top: theme.scale(60),
             zIndex: 2,
@@ -184,17 +271,12 @@ function getStyles(theme) {
             },
             theme.fullScreen
         ],
-        placeText: [
-            theme.textStyle({
-                font: 'NunitoRegular',
-                color: 'textPlaceholder',
-                size: 14,
-                align: 'left'
-            }),
-            {
-                flex: 0.8,
-            }
-        ],
+        placeText: theme.textStyle({
+            font: 'NunitoRegular',
+            color: 'textPlaceholder',
+            size: 14,
+            align: 'left'
+        }),
         distanceText: [
             theme.textStyle({
                 font: 'NunitoRegular',
@@ -204,6 +286,28 @@ function getStyles(theme) {
             }),
             {
                 flex: 0.2,
+            }
+        ],
+        placeholder: [
+            theme.textStyle({
+                font: 'NunitoRegular',
+                color: 'textSecondary',
+                size: 14,
+                align: 'left'
+            }),
+            {
+                marginBottom: theme.scale(25)
+            }
+        ],
+        secondaryPlaceholder: [
+            theme.textStyle({
+                font: 'NunitoRegular',
+                color: 'textSecondary',
+                size: 14,
+                align: 'center'
+            }),
+            {
+                marginTop: theme.scale(50)
             }
         ]
     };
