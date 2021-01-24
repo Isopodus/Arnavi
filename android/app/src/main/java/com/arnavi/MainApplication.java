@@ -3,6 +3,7 @@ package com.arnavi;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.joshblour.reactnativeheading.ReactNativeHeadingPackage;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
 import io.github.traviskn.rnuuidgenerator.RNUUIDGeneratorPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -37,6 +38,7 @@ public class MainApplication extends Application implements ReactApplication {
             new RNUUIDGeneratorPackage(),
             new VectorIconsPackage(),
             new LinearGradientPackage(),
+            new ReactNativeHeadingPackage(),
             new RNScreensPackage(),
             new SafeAreaContextPackage(),
             new RNGestureHandlerPackage(),
