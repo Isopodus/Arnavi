@@ -3,19 +3,10 @@ import { View, Animated, Easing, TouchableOpacity, Text, Keyboard } from 'react-
 import getTheme from "../global/Style";
 import {Icon, Input} from "./index";
 import {searchPlace} from '../utils/Geolocation';
+import {convertDistance} from '../utils/Distance';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAction } from "../store";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const convertDistance = (m) => {
-    if (m) {
-        const km = m / 1000;
-        if (km < 0.5) return `${m} m`;
-        else if (km > 9999) return '';
-        else return `${Math.round(km)} km`;
-    }
-    else return '';
-};
 
 const Separator = () => {
     const theme = getTheme();

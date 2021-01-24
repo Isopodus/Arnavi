@@ -107,6 +107,11 @@ const commonStyles = {
     justifyContent: 'space-between',
     alignItems: 'center'
   },
+  rowAlignedBetweenTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'stretch'
+  },
   rowAlignedVertical: {
     flexDirection: 'column',
   },
@@ -118,7 +123,7 @@ const commonStyles = {
   rowAlignedBetweenVertical: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'stretch'
   },
   rowAlignedTop: {
     flexDirection: 'row',

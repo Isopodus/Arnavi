@@ -14,7 +14,7 @@ export async function getPlaceDetail(place_id, sessiontoken) {
     return new Promise(resolve => {
        axios.get(
            'https://maps.googleapis.com/maps/api/place/details/json',
-           { params: { key, place_id, sessiontoken, fields: 'formatted_address,name,geometry,photos,opening_hours' } }
+           { params: { key, place_id, sessiontoken, fields: 'formatted_address,geometry,opening_hours,rating,photos,name' } }
        ).then(res => resolve(res));
     });
 }

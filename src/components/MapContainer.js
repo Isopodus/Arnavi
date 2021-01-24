@@ -3,13 +3,14 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import style from '../assets/map/style';
 
 export default function MapContainer(props) {
-    const { fullscreen = true, onSetRef, pins } = props;
+    const { fullscreen = true, onSetRef, pins, onPinClick } = props;
 
     const markers = React.useMemo(() => {
         return pins.map((pin, idx) => {
             const { color, location } = pin;
             return(
                 <Marker
+                    onPress={() => onPinClick(pin.placeId)}
                     pinColor={color}
                     coordinate={{ latitude: location.lat, longitude: location.lng }}
                     key={idx}
