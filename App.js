@@ -16,10 +16,24 @@ function AppRoot() {
 
     // Set geolocation callbacks
     React.useEffect(() => {
-        Geolocation.getCurrentPosition(info => {
+        this.locationWatch = Geolocation.watchPosition(info => {
             const {longitude, latitude} = info.coords;
             dispatch(setAction('location', {lat: latitude, lng: longitude}));
-        });
+        }, error => console.log(error),
+            {
+                timeout: 5000,
+                maximumAge: 10000,
+                enableHighAccuracy: true
+            });
+    }, []);
+
+    // Clear location on unmount
+    React.useEffect(() => {
+        return () => {
+            if (this.locationWatch) {
+                Geolocation.clearWatch(this.locationWatch);
+            }
+        };
     }, []);
 
     // Generate session token
