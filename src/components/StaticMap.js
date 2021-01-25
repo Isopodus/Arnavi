@@ -90,11 +90,11 @@ export default function StaticMap(props) {
         if (followUserMode) onMoveToCurrentLocation();
     }, [followUserMode]);
     React.useEffect(() => {
-        if (!movedToCurrent && userLocation.lat !== null && userLocation.lng !== null) {
-            onMoveToCurrentLocation();
+        if (!movedToCurrent && mapRef !== null && userLocation.lat !== null && userLocation.lng !== null) {
+            setTimeout(onMoveToCurrentLocation, 250);
             movedToCurrent = true;
         }
-    }, [userLocation]);
+    }, [userLocation, mapRef]);
     React.useEffect(() => {
         if (selectedPlace.placeId) {
             setFollowUserMode(false);
