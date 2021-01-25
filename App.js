@@ -24,14 +24,14 @@ function AppRoot() {
                     "Arnavi needs to know your accurate location to perform the best. Please allow!",
                 buttonNegative: "Cancel",
                 buttonPositive: "Allow"
-            })
+            });
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
             // Ask to turn on GPS
             const response = await RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
                 interval: 10000,
                 fastInterval: 5000,
-            })
+            });
             if (response === 'enabled' || response === 'already-enabled') {
 
                 // Set location watch
@@ -39,12 +39,12 @@ function AppRoot() {
                     Geolocation.getCurrentPosition((info) => {
                         const {longitude, latitude} = info.coords;
                         dispatch(setAction('location', {lat: latitude, lng: longitude}));
+                        dispatch(setAction('app'));
                     });
 
                     locationWatch = Geolocation.watchPosition(info => {
                             const {longitude, latitude} = info.coords;
                             dispatch(setAction('location', {lat: latitude, lng: longitude}));
-                            dispatch(setAction('app'));
                         }, error => console.log(error),
                         {
                             distanceFilter: 0,
@@ -55,7 +55,7 @@ function AppRoot() {
                 }, 1000);
             }
         }
-    }
+    };
 
     // Hide status bar
     React.useEffect(() => {
