@@ -2,6 +2,9 @@ import initialState from './state';
 
 export default function reducers(state = initialState, action) {
   switch (action.type) {
+    case "SET_APP_READY": {
+      return { ...state, appReady: true };
+    }
     case "SET_LOCATION": {
       const { payload } = action;
       return { ...state, userLocation: payload };

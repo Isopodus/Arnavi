@@ -59,6 +59,7 @@
 		FC93CDC970E14CF9A055CDC3 /* libRNUUIDGenerator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 739A69AA00734597B0A32F73 /* libRNUUIDGenerator.a */; };
 		BD7883E803004E22B9854F98 /* libRNCGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4271072104E74792A6ABD97F /* libRNCGeolocation.a */; };
 		CB52099F2F474148A9891F6D /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C644C1134D5D4461956F1620 /* libRNCAsyncStorage.a */; };
+		FC3A2CBB6F3D464CA55D8A24 /* libLottieReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9A23FD52A64EAEA0B3AB0E /* libLottieReactNative.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -398,6 +399,8 @@
 		4271072104E74792A6ABD97F /* libRNCGeolocation.a */ = {isa = PBXFileReference; name = "libRNCGeolocation.a"; path = "libRNCGeolocation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		F91AB7ED0BDB4F21A794E285 /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNCAsyncStorage.xcodeproj"; path = "../node_modules/@react-native-async-storage/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		C644C1134D5D4461956F1620 /* libRNCAsyncStorage.a */ = {isa = PBXFileReference; name = "libRNCAsyncStorage.a"; path = "libRNCAsyncStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		AA3506F525B34C82AFFB8DAD /* LottieReactNative.xcodeproj */ = {isa = PBXFileReference; name = "LottieReactNative.xcodeproj"; path = "../node_modules/lottie-react-native/src/ios/LottieReactNative.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		5F9A23FD52A64EAEA0B3AB0E /* libLottieReactNative.a */ = {isa = PBXFileReference; name = "libLottieReactNative.a"; path = "libLottieReactNative.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -439,6 +442,7 @@
 				FC93CDC970E14CF9A055CDC3 /* libRNUUIDGenerator.a in Frameworks */,
 				BD7883E803004E22B9854F98 /* libRNCGeolocation.a in Frameworks */,
 				CB52099F2F474148A9891F6D /* libRNCAsyncStorage.a in Frameworks */,
+				FC3A2CBB6F3D464CA55D8A24 /* libLottieReactNative.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,6 +648,7 @@
 				CACCB50406494DAC9275D070 /* RNUUIDGenerator.xcodeproj */,
 				B30E8AACA9B149F9933D476C /* RNCGeolocation.xcodeproj */,
 				F91AB7ED0BDB4F21A794E285 /* RNCAsyncStorage.xcodeproj */,
+				AA3506F525B34C82AFFB8DAD /* LottieReactNative.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1300,6 +1305,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1316,6 +1322,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Debug;
@@ -1351,6 +1358,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1367,6 +1375,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-heading",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Release;
@@ -1402,6 +1411,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-heading",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Debug;
@@ -1436,6 +1446,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Release;
@@ -1479,6 +1490,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1495,6 +1507,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Debug;
@@ -1538,6 +1551,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1554,6 +1568,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Release;
@@ -1596,6 +1611,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1612,6 +1628,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Debug;
@@ -1654,6 +1671,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1670,6 +1688,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-heading",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
+					"$(SRCROOT)\..\node_modules\lottie-react-native\src\ios\LottieReactNative",
 				);
 			};
 			name = Release;

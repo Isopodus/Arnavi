@@ -1,4 +1,5 @@
 const initialState = {
+  appReady: false,
   userLocation: {
     lat: null,
     lng: null

@@ -2,7 +2,8 @@ const SET_ACTIONS = {
   location: 'SET_LOCATION',
   token: 'SET_TOKEN',
   place: 'SET_PLACE',
-  history: 'SET_RECENT_LOCATIONS'
+  history: 'SET_RECENT_LOCATIONS',
+  app: 'SET_APP_READY'
 };
 const CLEAN_ACTIONS = {
   location: 'CLEAN_LOCATION',

@@ -20,6 +20,7 @@ function AppRoot() {
         Geolocation.getCurrentPosition(info => {
             const {longitude, latitude} = info.coords;
             dispatch(setAction('location', {lat: latitude, lng: longitude}));
+            dispatch(setAction('app'));
         });
     }, []);
 
