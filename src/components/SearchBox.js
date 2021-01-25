@@ -15,11 +15,12 @@ const Separator = () => {
     )
 };
 
-export default function SearchBox() {
+export default function SearchBox(props) {
     const theme = getTheme();
     const styles = getStyles(getTheme());
     const {token, userLocation, recentLocations} = useSelector(state => state);
     const dispatch = useDispatch();
+    const { locked, onClearLocation } = props;
 
     const [text, setText] = React.useState('');
     const [searching, setSearching] = React.useState(false);
@@ -30,8 +31,8 @@ export default function SearchBox() {
     const fadeBackground = React.useRef(new Animated.Value(0)).current;
 
     const onEndSearching = React.useCallback(() => {
-        Keyboard.dismiss();
         setText('');
+        Keyboard.dismiss();
         Animated.timing(fadeBackground, {
             toValue: 0,
             easing: Easing.linear(),
@@ -68,6 +69,9 @@ export default function SearchBox() {
             }
         }
     }, [recentLocations]);
+    const onDeselect = React.useCallback(() => {
+        onClearLocation();
+    }, []);
 
     React.useEffect(() => {
         if (recentLocations.length !== 0) setRecentPlacesList(recentLocations);
@@ -98,9 +102,9 @@ export default function SearchBox() {
         <React.Fragment>
             <View style={styles.searchBox}>
                 <View style={{ flex: 0.15 }}>
-                    {searching
+                    {(searching || locked)
                         ? (
-                            <TouchableOpacity onPress={onEndSearching}>
+                            <TouchableOpacity onPress={locked ? onDeselect : onEndSearching}>
                                 <Icon
                                     name={'arrow-back'}
                                     color={theme.textAccent}
@@ -127,26 +131,27 @@ export default function SearchBox() {
                     onFocus={() => setSearching(true)}
                     onBlur={onEndSearching}
                 />
-                {text !== ''
-                    ? (
-                        <TouchableOpacity onPress={() => setText('')}>
+                {!locked && (
+                    text !== ''
+                        ? (
+                            <TouchableOpacity onPress={() => setText('')}>
+                                <Icon
+                                    name={'close'}
+                                    color={theme.textAccent}
+                                    size={theme.scale(20)}
+                                    style={{ flex: 0.1, margin: theme.scale(2) }}
+                                />
+                            </TouchableOpacity>
+                        )
+                        : (
                             <Icon
-                                name={'close'}
+                                name={'star-border'}
                                 color={theme.textAccent}
-                                size={theme.scale(20)}
-                                style={{ flex: 0.1, margin: theme.scale(2) }}
+                                size={theme.scale(22)}
+                                style={{ flex: 0.1 }}
                             />
-                        </TouchableOpacity>
-                    )
-                    : (
-                        <Icon
-                            name={'star-border'}
-                            color={theme.textAccent}
-                            size={theme.scale(22)}
-                            style={{ flex: 0.1 }}
-                        />
-                    )
-                }
+                        )
+                )}
             </View>
             {searching && (
                 <React.Fragment>

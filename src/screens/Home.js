@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import { getPlaceDetail } from '../utils/Geolocation';
 import { getDistance, convertDistance } from '../utils/Distance';
-import { setAction } from "../store";
+import { setAction, cleanAction } from "../store";
 import { GOOGLE_API_KEY } from "../global/Constants";
 
 const getImageUrl = (image) => {
@@ -51,6 +51,12 @@ export default function Home() {
     const onGetDistance = React.useCallback((coords) => {
         return convertDistance(getDistance(userLocation, coords));
     }, [userLocation]);
+    const onUnlocked = React.useCallback(() => {
+        setFollowUserMode(true);
+        setModal(false);
+        setPins([]);
+        dispatch(cleanAction('place'));
+    }, []);
 
     React.useEffect(() => {
         if (followUserMode) onMoveToCurrentLocation();
@@ -93,7 +99,7 @@ export default function Home() {
                 colors={['rgba(13, 13, 13, 1)', 'rgba(13, 13, 13, 0)']}
                 style={styles.gradient}
             />
-            <SearchBox />
+            <SearchBox locked={!followUserMode} onClearLocation={onUnlocked} />
             <View style={{position: 'absolute', top: theme.scale(500), width: '100%'}}>
                 <TouchableOpacity onPress={onMoveToCurrentLocation}>
                     <Icon
