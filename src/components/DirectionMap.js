@@ -139,7 +139,7 @@ export default function DirectionMap(props) {
                 <View style={{ height: theme.scale(15) }} />
                 <TouchableOpacity onPress={() => onMoveCamera(cameraPosition)}>
                     <Icon
-                        name={'navigation'}
+                        name={'navigation-2'}
                         color={theme.textAccent}
                         size={theme.scale(22)}
                         style={styles.roundBtn}

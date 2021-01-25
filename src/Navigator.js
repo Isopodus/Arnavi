@@ -3,13 +3,12 @@ import {NavigationContainer} from "@react-navigation/native";
 import Home from "./screens/Home";
 import Splash from './screens/Splash';
 import FavoriteLocations from './screens/FavoriteLocations';
-import {ViroARSceneNavigator} from "react-viro";
 import ARNavigator from "./screens/ARNavigator";
 import {createStackNavigator} from "@react-navigation/stack";
 
 const Stack = createStackNavigator();
 
-const arnavi = () => <ViroARSceneNavigator initialScene={{ scene: ARNavigator }}/>;
+const arnavi = () => <ARNavigator/>;
 
 export default function Navigator() {
     return(

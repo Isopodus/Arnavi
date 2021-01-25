@@ -5641,6 +5641,11 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-native-android-location-enabler@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-android-location-enabler/-/react-native-android-location-enabler-1.1.0.tgz#57e176c8bc24c0bf21486976e3de093d3259b1a2"
+  integrity sha512-JBtHiEwPRrOqrbOsAzEqooVQpgQkKccu/lbJ0C/gh9OBuUwLU0eG2d1D3FAyLrvFC3H70rnUtRg+37hLlorCpw==
+
 react-native-gesture-handler@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.9.0.tgz#e441b1c0277c3fd4ca3e5c58fdd681e2f0ceddf0"

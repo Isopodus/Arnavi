@@ -1,14 +1,23 @@
 import React from 'react';
-import {ViroBox} from "react-viro";
+import {Viro3DObject} from "react-viro";
 
 export default function ARWaypointMarker(props) {
     const {rotation, point} = props;
-    return <ViroBox
-        height={0.1}
-        length={0.1}
-        width={0.1}
+    // const ref = React.useRef()
+    //
+    // if (ref.current) {
+    //     ref.current.getTransformAsync()
+    //         .then(data => console.log(data));
+    //
+    // }
+    return <Viro3DObject
+        //ref={ref}
+        source={require("./res/arrow.obj")}
+        resources={[require('./res/arrow.mtl')]}
+        type="OBJ"
+        transformBehaviors={["billboard"]}
+
         scale={[1, 1, 1]}
-        materials={["arrow"]}
         position={point ?? [0, 0, 0]}
         rotation={rotation ?? [0, 0, 0]}/>
 };

@@ -6,9 +6,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Feather from 'react-native-vector-icons/Feather';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const iconsMaterialIcons = ['my-location', 'search', 'star-border', 'arrow-back', 'access-time', 'close', 'star'];
-const iconMaterialCommunityIcons = ['layers-outline'];
-const iconsFeather = ['arrow-up-left', 'navigation'];
+const iconsMaterialIcons = ['my-location', 'search', 'star-border', 'arrow-back', 'access-time', 'close', 'star', 'check'];
+const iconMaterialCommunityIcons = ['layers-outline', 'navigation'];
+const iconsFeather = ['arrow-up-left', 'navigation-2'];
 const iconsFontAwesome5 = ['map-marker-alt'];
 
 const selectIcon = (name) => {

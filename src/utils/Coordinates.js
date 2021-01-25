@@ -1,6 +1,6 @@
 // Get distance between two geo coords
 export const calcCrow = (lat1, lon1, lat2, lon2) => {
-    const R = 6371000; // km
+    const R = 6371000; // m
     const dLat = rad(lat2-lat1);
     const dLon = rad(lon2-lon1);
     lat1 = rad(lat1);
@@ -29,6 +29,7 @@ export const bearing = (lat1, lon1, lat2, lon2) => {
 // Rotate a point in space by given angle
 export const rotatePoint = (point, angle) => {
     angle = (angle + 360) % 360
+    //console.log('rotation angle', angle)
     const x = point[0], y = point[1], z = point[2];
     const newCoords = [0, y, 0];
 

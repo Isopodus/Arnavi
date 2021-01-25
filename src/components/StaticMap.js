@@ -15,6 +15,8 @@ const getImageUrl = (image) => {
     return `https://maps.googleapis.com/maps/api/place/photo?key=${GOOGLE_API_KEY}&photoreference=${photo_reference}&maxheight=${height}&maxwidth=${width}`;
 };
 
+let movedToCurrent = false;
+
 export default function StaticMap(props) {
     const theme = getTheme();
     const styles = getStyles(theme);
@@ -87,6 +89,12 @@ export default function StaticMap(props) {
     React.useEffect(() => {
         if (followUserMode) onMoveToCurrentLocation();
     }, [followUserMode]);
+    React.useEffect(() => {
+        if (!movedToCurrent && userLocation.lat !== null && userLocation.lng !== null) {
+            onMoveToCurrentLocation();
+            movedToCurrent = true;
+        }
+    }, [userLocation]);
     React.useEffect(() => {
         if (selectedPlace.placeId) {
             setFollowUserMode(false);
