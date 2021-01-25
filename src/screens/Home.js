@@ -52,6 +52,7 @@ export default function Home() {
                         onClose={() => {
                             setGoToMode(false);
                             setModal(true);
+                            setPoints([]);
                         }}
                     />
                 )
