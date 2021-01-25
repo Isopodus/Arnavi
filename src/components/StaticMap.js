@@ -98,7 +98,6 @@ export default function StaticMap(props) {
     React.useEffect(() => {
         if (selectedPlace.placeId) {
             setFollowUserMode(false);
-            setModal(true);
             getPlaceDetail(selectedPlace.placeId, token)
                 .then(res => {
                     if (res.status === 200) {
@@ -129,6 +128,7 @@ export default function StaticMap(props) {
                                         }
                                     )
                                 );
+                                setModal(true);
                                 onMoveToLocation({ lat: geometry.location.lat, lng: geometry.location.lng });
                             })
                     }
