@@ -94,7 +94,8 @@ export default function StaticMap(props) {
                 .then(res => {
                     if (res.status === 200) {
                         const { geometry, formatted_address, photos, name } = res.data.result;
-                        setPins(prev => [{ location: geometry.location, color: theme.textAccent }]);
+                        setPins([{ location: geometry.location, color: theme.textAccent }]);
+
                         AsyncStorage.getItem('@favorites')
                             .then((favorites) => {
                                 let isFavorite = false;
@@ -112,7 +113,7 @@ export default function StaticMap(props) {
                                             name,
                                             location: geometry.location,
                                             address: formatted_address,
-                                            photo: photos.length !== 0 ? photos[0] : null,
+                                            photo: photos && photos?.length !== 0 ? photos[0] : null,
                                             distance: onGetDistance(geometry.location),
                                             isFavorite,
                                             isFullData: true
@@ -185,17 +186,21 @@ export default function StaticMap(props) {
                         </View>
                         <View style={theme.rowAlignedBetweenStretch}>
                             <ImageBackground
-                                source={{uri: getImageUrl(selectedPlace.photo)}}
+                                source={
+                                    selectedPlace.photo
+                                        ? {uri: getImageUrl(selectedPlace.photo)}
+                                        : require('../assets/images/placeholder.jpg')
+                                }
                                 style={styles.image}
                                 resizeMode={'cover'}
                             />
                             <View style={styles.textBox}>
-                                <View style={theme.rowAlignedBetweenStretch}>
-                                    <Text style={styles.primaryText} numberOfLines={1}>
+                                <View style={[theme.rowAlignedBetweenStretch, { flex: 1 }]}>
+                                    <Text style={[styles.primaryText, { flex: 0.9 }]} numberOfLines={1}>
                                         {selectedPlace.name}
                                     </Text>
                                     <TouchableOpacity
-                                        style={{ paddingLeft: theme.scale(20) }}
+                                        style={{ paddingLeft: theme.scale(20), flex: 0.1 }}
                                         onPress={onSelectFavoriteLocation}
                                     >
                                         <Icon

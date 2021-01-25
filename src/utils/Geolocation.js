@@ -18,3 +18,12 @@ export async function getPlaceDetail(place_id, sessiontoken) {
        ).then(res => resolve(res));
     });
 }
+
+export async function getPlaceIdByCoordinated(location) {
+    return new Promise(resolve => {
+        axios.get(
+            'https://maps.googleapis.com/maps/api/geocode/json',
+            { params: { key, latlng: `${location.latitude},${location.longitude}` } }
+        ).then(res => resolve(res));
+    });
+}

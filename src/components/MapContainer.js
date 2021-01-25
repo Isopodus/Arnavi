@@ -4,7 +4,7 @@ import style from '../assets/map/style';
 import getTheme from "../global/Style";
 
 export default function MapContainer(props) {
-    const { fullscreen = true, onSetRef, pins, onPinClick, points } = props;
+    const { fullscreen = true, onSetRef, pins, onPinClick, points, onPress } = props;
     const theme = getTheme();
 
     const markers = React.useMemo(() => {
@@ -28,6 +28,7 @@ export default function MapContainer(props) {
             showsMyLocationButton={false}
             scrollEnabled={true}
             provider={PROVIDER_GOOGLE}
+            onPress={onPress}
             initialRegion={{
                 latitude: 0,
                 longitude: 0,

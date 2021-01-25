@@ -4,16 +4,32 @@ import React from 'react';
 import {MapContainer, StaticMap, DirectionMap} from "../components";
 import LinearGradient from "react-native-linear-gradient";
 import getTheme from "../global/Style";
+import {setAction} from "../store";
+import {useDispatch} from "react-redux";
+import {getPlaceIdByCoordinated} from '../utils/Geolocation';
 
 export default function Home() {
     const theme = getTheme();
     const styles = getStyles(theme);
+    const dispatch = useDispatch();
 
     const [goToMode, setGoToMode] = React.useState(false);
     const [mapRef, setMapRef] = React.useState(null);
     const [pins, setPins] = React.useState([]);
     const [points, setPoints] = React.useState([]);
     const [modal, setModal] = React.useState(false);
+
+    const onPress = React.useCallback((e) => {
+        const {coordinate} = e.nativeEvent;
+        getPlaceIdByCoordinated(coordinate)
+            .then((res) => {
+                if (res.status === 200) {
+                    const { data } = res;
+                    const { results } = data;
+                    dispatch(setAction('place', { placeId: results[0].place_id }));
+                }
+            });
+    }, []);
 
     return(
         <React.Fragment>
@@ -22,6 +38,7 @@ export default function Home() {
                 pins={pins}
                 onPinClick={() => setModal(true)}
                 points={points}
+                onPress={onPress}
             />
             <LinearGradient
                 colors={[theme.rgba(theme.black, 1), theme.rgba(theme.black, 0)]}
