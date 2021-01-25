@@ -27,33 +27,42 @@ function AppRoot() {
             });
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
-            // Ask to turn on GPS
-            const response = await RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
-                interval: 10000,
-                fastInterval: 5000,
-            });
-            if (response === 'enabled' || response === 'already-enabled') {
+            const setLocationWatch = () => {
+                Geolocation.getCurrentPosition((info) => {
+                    const {longitude, latitude} = info.coords;
+                    dispatch(setAction('location', {lat: latitude, lng: longitude}));
+                    dispatch(setAction('app'));
+                }, askGPS);
 
-                // Set location watch
-                setTimeout(() => {
-                    Geolocation.getCurrentPosition((info) => {
+                locationWatch = Geolocation.watchPosition(info => {
                         const {longitude, latitude} = info.coords;
                         dispatch(setAction('location', {lat: latitude, lng: longitude}));
-                        dispatch(setAction('app'));
+                    },
+                    {
+                        distanceFilter: 0,
+                        timeout: 5000,
+                        maximumAge: 10000,
+                        enableHighAccuracy: true
                     });
+            };
 
-                    locationWatch = Geolocation.watchPosition(info => {
-                            const {longitude, latitude} = info.coords;
-                            dispatch(setAction('location', {lat: latitude, lng: longitude}));
-                        }, error => console.log(error),
-                        {
-                            distanceFilter: 0,
-                            timeout: 5000,
-                            maximumAge: 10000,
-                            enableHighAccuracy: true
-                        });
-                }, 1000);
+            // Ask to turn on GPS
+            const askGPS = () => {
+                RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
+                    interval: 5000,
+                    fastInterval: 1000,
+                })
+                    .then(response => {
+                        if (response === 'enabled') {
+                            // Set location watch after a timeout
+                            setTimeout(setLocationWatch, 1000);
+                        } else if (response === 'already-enabled') {
+                            // Set location watch
+                            setLocationWatch();
+                        }
+                    });
             }
+            askGPS();
         }
     };
 

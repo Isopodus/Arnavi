@@ -142,7 +142,7 @@ class ARNavigator extends Component {
         const theme = getTheme();
         const styles = getStyles(theme);
         const {userLocation} = this.props;
-        const {waypointIdx, heading} = this.state;
+        const {waypointIdx, heading, initialHeading} = this.state;
         const isDone = !!!this.waypoints[waypointIdx];
 
         let distance = 0;
@@ -160,14 +160,13 @@ class ARNavigator extends Component {
         return (
             <View style={{flex: 1}}>
                 <ViroARSceneNavigator
-                    autofocus
                     ref={(ref) => this.sceneRef = ref}
                     viroAppProps={{
                         waypoint: this.drawWaypoint(this.waypoints[waypointIdx], waypointIdx),
                         onTrackingUpdated: this.updateInitialHeadingAndCamera,
                     }}
                     initialScene={{
-                        scene: (props) => <NavigatorScene {...props}/>,
+                        scene: NavigatorScene,
                     }}
                 />
                 <View style={styles.compassContainer}>
