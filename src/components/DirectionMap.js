@@ -86,7 +86,7 @@ export default function DirectionMap(props) {
                 }
                 else Toast.show('Unable to connect', Toast.SHORT);
             });
-    }, [userLocation, selectedPlace, mapRef]);
+    }, [selectedPlace, mapRef]);
     React.useEffect(() => {
         if (modal) {
             Animated.timing(movingAnimation, {

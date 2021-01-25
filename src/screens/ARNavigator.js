@@ -167,7 +167,7 @@ class ARNavigator extends Component {
                         onTrackingUpdated: this.updateInitialHeadingAndCamera,
                     }}
                     initialScene={{
-                        scene: NavigatorScene,
+                        scene: (props) => <NavigatorScene {...props}/>,
                     }}
                 />
                 <View style={styles.compassContainer}>

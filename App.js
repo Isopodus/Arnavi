@@ -10,6 +10,8 @@ import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Navigator from "./src/Navigator";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+let locationWatch = null;
+
 function AppRoot() {
     const dispatch = useDispatch();
 
@@ -34,7 +36,12 @@ function AppRoot() {
 
                 // Set location watch
                 setTimeout(() => {
-                    this.locationWatch = Geolocation.watchPosition(info => {
+                    Geolocation.getCurrentPosition((info) => {
+                        const {longitude, latitude} = info.coords;
+                        dispatch(setAction('location', {lat: latitude, lng: longitude}));
+                    });
+
+                    locationWatch = Geolocation.watchPosition(info => {
                             const {longitude, latitude} = info.coords;
                             dispatch(setAction('location', {lat: latitude, lng: longitude}));
                             dispatch(setAction('app'));
@@ -63,8 +70,8 @@ function AppRoot() {
     // Clear location on unmount
     React.useEffect(() => {
         return () => {
-            if (this.locationWatch) {
-                Geolocation.clearWatch(this.locationWatch);
+            if (locationWatch) {
+                Geolocation.clearWatch(locationWatch);
             }
         };
     }, []);
