@@ -7,6 +7,7 @@ import getTheme from "../global/Style";
 import {setAction} from "../store";
 import {useDispatch} from "react-redux";
 import {getPlaceIdByCoordinated} from '../utils/Geolocation';
+import Toast from "react-native-simple-toast";
 
 export default function Home() {
     const theme = getTheme();
@@ -28,6 +29,7 @@ export default function Home() {
                     const { results } = data;
                     dispatch(setAction('place', { placeId: results[0].place_id }));
                 }
+                else Toast.show('Unable to connect', Toast.SHORT);
             });
     }, []);
 

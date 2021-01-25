@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setAction } from "../store";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-simple-toast';
 
 const Separator = () => {
     const theme = getTheme();
@@ -95,6 +96,7 @@ export default function SearchBox(props) {
                         const { data } = res;
                         setPlacesList(data.predictions);
                     }
+                    else Toast.show('Unable to connect', Toast.SHORT);
                 });
         }
         else setPlacesList([]);
@@ -136,12 +138,11 @@ export default function SearchBox(props) {
                 {!locked && (
                     text !== ''
                         ? (
-                            <TouchableOpacity onPress={() => setText('')}>
+                            <TouchableOpacity onPress={() => setText('')} style={{ flex: 0.1 }}>
                                 <Icon
                                     name={'close'}
                                     color={theme.textAccent}
-                                    size={theme.scale(20)}
-                                    style={{ flex: 0.1, margin: theme.scale(2) }}
+                                    size={theme.scale(22)}
                                 />
                             </TouchableOpacity>
                         )

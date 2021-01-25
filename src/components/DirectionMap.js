@@ -6,6 +6,7 @@ import getTheme from "../global/Style";
 import { getDirection } from '../utils/Direction';
 import {convertDistance} from "../utils/Distance";
 import {useNavigation} from "@react-navigation/native";
+import Toast from "react-native-simple-toast";
 
 const formattedSeconds = (seconds) => {
     let min = Math.ceil(seconds / 60);
@@ -83,6 +84,7 @@ export default function DirectionMap(props) {
                     setCameraPosition(coords);
                     onMoveCamera(coords);
                 }
+                else Toast.show('Unable to connect', Toast.SHORT);
             });
     }, [userLocation, selectedPlace, mapRef]);
     React.useEffect(() => {
@@ -122,7 +124,7 @@ export default function DirectionMap(props) {
                     }
                 >
                     <Text style={styles.secondaryHeaderText}>go to</Text>
-                    <Text style={styles.headerText}>{selectedPlace.name}</Text>
+                    <Text style={styles.headerText} numberOfLines={1}>{selectedPlace.name}</Text>
                 </View>
             </View>
             <Animated.View style={[styles.btnBar, { bottom: movingAnimation }]}>

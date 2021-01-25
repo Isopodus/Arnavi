@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {getPlaceDetail} from "../utils/Geolocation";
 import {Button, Icon, Popup, SearchBox} from "./index";
 import {GOOGLE_API_KEY} from "../global/Constants";
+import Toast from "react-native-simple-toast";
 
 const getImageUrl = (image) => {
     const { photo_reference, height, width } = image;
@@ -123,6 +124,7 @@ export default function StaticMap(props) {
                                 onMoveToLocation({ lat: geometry.location.lat, lng: geometry.location.lng });
                             })
                     }
+                    else Toast.show('Unable to connect', Toast.SHORT);
                 });
         }
     }, [selectedPlace.placeId, token, userLocation]);
