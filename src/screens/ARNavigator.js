@@ -16,33 +16,17 @@ import ARWaypointMarker from "../components/ARWaypointMarker";
 
 class ARNavigator extends Component {
 
-    // waypoints = [
-    //         {lat: 47.90895, lng: 33.348},
-    //         {lat: 47.90885, lng: 33.34807},
-    //         {lat: 47.90889, lng: 33.34817}
-    //     ];
-
-    // waypoints = [
-    //     {lat: 47.90892, lng: 33.34779},
-    //     {lat: 47.90878, lng: 33.34778},
-    //     {lat: 47.90863, lng: 33.3476}
-    // ];
-
     waypoints = [
-        {lat: 47.908953076075925, lng: 33.34762378333839},
-        {lat: 47.908922470775664, lng: 33.34786382274828},
+        // {lat: 47.908953076075925, lng: 33.34762378333839},
+        // {lat: 47.908922470775664, lng: 33.34786382274828},
 
-        // {lat: 47.90883,  lng: 33.34791},
-
-        // {lat: 47.908964730815455, lng: 33.34753564073854},
-        // {lat: 47.90902244926177, lng: 33.34738568640717},
-        // {lat: 47.90905616183877, lng: 33.34719369708739},
-        // {lat: 47.90913076019437, lng: 33.34705458432435},
-        // {lat: 47.90913076019437, lng: 33.34705458432435},
-        // {lat: 47.908978038151425, lng: 33.346981778046796},
-        // {lat: 47.908825030267444, lng: 33.34689465073554},
-        // {lat: 47.908823214937684, lng: 33.34717944139605},
-        // {lat: 47.90878785493047, lng: 33.3475078204621},
+        {lat: 47.90897674964831, lng: 33.34755424400486},
+        {lat: 47.90906525721537, lng: 33.34727387825782},
+        {lat: 47.909021437650324, lng: 33.347008480603726},
+        {lat: 47.908843819726656, lng: 33.34691889326},
+        {lat: 47.908806730985496, lng: 33.34701310991839},
+        {lat: 47.90879164149896, lng: 33.347184934469375},
+        {lat: 47.908774972195374, lng: 33.34752180137761},
 
         // {lat: 47.89546, lng: 33.33501},
         // {lat: 47.89608, lng: 33.33476},
@@ -55,10 +39,12 @@ class ARNavigator extends Component {
     constructor() {
         super();
 
+        this.sceneRef = React.createRef();
         this.heading = 0;
         this.state = {
             waypointIdx: 0,
             initialHeading: null,
+            initialPosition: null,
         };
     }
 
@@ -80,9 +66,16 @@ class ARNavigator extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.userLocation !== this.props.userLocation)
+        const {userLocation} = this.props;
+        const {initialPosition} = this.state;
+
+        if (prevProps.userLocation !== userLocation)
         {
             this.checkIfNextWaypoint(this.waypoints[this.state.waypointIdx]);
+
+            if (initialPosition === null) {
+                this.setState({initialPosition: userLocation});
+            }
         }
     }
 
@@ -92,22 +85,21 @@ class ARNavigator extends Component {
     }
 
     drawWaypoint = (waypointLocation, key) => {
-        const {userLocation} = this.props;
-        const {initialHeading} = this.state;
+        const {initialHeading, initialPosition} = this.state;
 
-        if (waypointLocation && initialHeading !== null) {
+        if (waypointLocation && initialHeading !== null && initialPosition !== null) {
             const distance = calcCrow(
-                userLocation.lat, userLocation.lng,
+                initialPosition.lat, initialPosition.lng,
                 waypointLocation.lat, waypointLocation.lng
             );
             const angle = bearing(
-                userLocation.lat, userLocation.lng,
+                initialPosition.lat, initialPosition.lng,
                 waypointLocation.lat, waypointLocation.lng
             );
-            let point = [0, -5, -distance];
+            let point = [0, 0, -distance];
             point = rotatePoint(point, angle - initialHeading);
 
-            console.log(distance, angle, initialHeading, point);
+            //console.log(distance, angle, initialHeading, point);
 
             return <ARWaypointMarker point={point} key={key}/>;
         }
@@ -120,7 +112,6 @@ class ARNavigator extends Component {
 
         this.setState({
             waypointIdx: this.state.waypointIdx+1,
-            initialHeading: this.heading
         });
         Vibration.vibrate([0, 150, 20, 150]);
     }
@@ -132,7 +123,7 @@ class ARNavigator extends Component {
                 userLocation.lat, userLocation.lng,
                 waypointLocation.lat, waypointLocation.lng
             );
-            if (distance > 5) {
+            if (distance < 5) {
                 this.onNextWaypoint();
             }
         }
@@ -151,6 +142,7 @@ class ARNavigator extends Component {
         return (
             <View style={{flex: 1}}>
                 <ViroARSceneNavigator
+                    ref={this.sceneRef}
                     viroAppProps={{
                         waypoint: this.drawWaypoint(this.waypoints[waypointIdx], waypointIdx)
                     }}

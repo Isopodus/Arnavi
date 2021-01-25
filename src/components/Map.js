@@ -13,7 +13,7 @@ export default function Map() {
     const [mapRef, setMapRef] = React.useState(null);
 
     const onMoveToCurrentLocation = React.useCallback(() => {
-        console.log('onMoveToCurrentLocation', userLocation)
+        //console.log('onMoveToCurrentLocation', userLocation)
         const { lat, lng } = userLocation;
         if (lat && lng) {
             mapRef && mapRef.animateToRegion({
@@ -25,7 +25,7 @@ export default function Map() {
         }
     }, [userLocation, mapRef]);
     const onMoveToLocation = React.useCallback((coords) => {
-        console.log('onMoveToLocation', coords)
+        //console.log('onMoveToLocation', coords)
         mapRef && mapRef.animateToRegion({
             longitude: coords.lng,
             latitude: coords.lat,
