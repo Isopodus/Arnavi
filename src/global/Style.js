@@ -11,6 +11,20 @@ const colors = {
   black: '#0d0d0d'
 };
 
+const rgba = (hexCode, opacity = 1) => {
+  let hex = hexCode.replace('#', '');
+
+  if (hex.length === 3) {
+    hex = `${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`;
+  }
+
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+
+  return `rgba(${r},${g},${b},${opacity})`;
+};
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -98,16 +112,12 @@ const textStyle = ({ color, font, size, align = 'center' }) => {
 };
 
 const commonStyles = {
-  rowAligned: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
   rowAlignedBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
   },
-  rowAlignedBetweenTop: {
+  rowAlignedBetweenStretch: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'stretch'
@@ -125,9 +135,10 @@ const commonStyles = {
     justifyContent: 'space-between',
     alignItems: 'stretch'
   },
-  rowAlignedTop: {
-    flexDirection: 'row',
-    alignItems: 'flex-start'
+  rowAlignedRightVertical: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end'
   },
   fullScreen: { width, height }
 };
@@ -137,6 +148,7 @@ export default function getTheme() {
     ...colors,
     ...commonStyles,
     scale,
-    textStyle
+    textStyle,
+    rgba
   };
 };

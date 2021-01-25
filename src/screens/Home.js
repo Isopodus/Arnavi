@@ -2,7 +2,7 @@
 
 import React from 'react';
 import {SearchBox, Icon, MapContainer, Popup, Button} from "../components";
-import {View, TouchableOpacity, Text, ImageBackground} from "react-native";
+import {View, TouchableOpacity, Text, ImageBackground, Animated, Easing} from "react-native";
 import getTheme from "../global/Style";
 import { useSelector, useDispatch } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
@@ -27,6 +27,8 @@ export default function Home() {
     const [mapRef, setMapRef] = React.useState(null);
     const [pins, setPins] = React.useState([]);
     const [modal, setModal] = React.useState(false);
+
+    const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
     const onMoveToCurrentLocation = React.useCallback(() => {
         const { lat, lng } = userLocation;
@@ -89,7 +91,6 @@ export default function Home() {
     React.useEffect(() => {
         if (followUserMode) onMoveToCurrentLocation();
     }, [followUserMode]);
-
     React.useEffect(() => {
         if (selectedPlace.placeId) {
             setFollowUserMode(false);
@@ -129,38 +130,59 @@ export default function Home() {
                 });
         }
     }, [selectedPlace.placeId, token, userLocation]);
+    React.useEffect(() => {
+        if (modal) {
+            Animated.timing(movingAnimation, {
+                toValue: 310,
+                easing: Easing.linear(),
+                duration: 300
+            }).start();
+        }
+        else {
+            Animated.timing(movingAnimation, {
+                toValue: 60,
+                easing: Easing.linear(),
+                duration: 300
+            }).start();
+        }
+    }, [modal]);
 
     return(
         <React.Fragment>
             <MapContainer onSetRef={(ref) => setMapRef(ref)} pins={pins} onPinClick={onPinClick} />
             <LinearGradient
-                colors={['rgba(13, 13, 13, 1)', 'rgba(13, 13, 13, 0)']}
+                colors={[theme.rgba(theme.black, 1), theme.rgba(theme.black, 0)]}
                 style={styles.gradient}
             />
             <SearchBox locked={!followUserMode} onClearLocation={onUnlocked} />
-            <View style={{position: 'absolute', top: theme.scale(500), width: '100%'}}>
+            <Animated.View style={[styles.btnBar, { bottom: movingAnimation }]}>
                 <TouchableOpacity onPress={onMoveToCurrentLocation}>
                     <Icon
                         name={'my-location'}
                         color={theme.textAccent}
                         size={theme.scale(25)}
+                        style={{
+                            padding: theme.scale(10),
+                            backgroundColor: theme.rgba(theme.black, 0.8),
+                            borderRadius: 150/2
+                        }}
                     />
                 </TouchableOpacity>
-            </View>
+            </Animated.View>
             <Popup visible={modal} style={styles.modal} onClose={() => setModal(false)}>
                 {selectedPlace.isFullData && (
                     <View style={theme.rowAlignedCenterVertical}>
                         <View style={styles.row}>
                             <View style={styles.bar} />
                         </View>
-                        <View style={theme.rowAlignedBetweenTop}>
+                        <View style={theme.rowAlignedBetweenStretch}>
                             <ImageBackground
                                 source={{uri: getImageUrl(selectedPlace.photo)}}
                                 style={styles.image}
                                 resizeMode={'cover'}
                             />
                             <View style={styles.textBox}>
-                                <View style={theme.rowAlignedBetweenTop}>
+                                <View style={theme.rowAlignedBetweenStretch}>
                                     <Text style={styles.primaryText} numberOfLines={1}>
                                         {selectedPlace.name}
                                     </Text>
@@ -204,9 +226,16 @@ function getStyles(theme) {
             position: 'absolute',
             top: 0,
         },
+        btnBar: {
+            ...theme.rowAlignedRightVertical,
+            position: 'absolute',
+            width: '100%',
+            flex: 1,
+            paddingHorizontal: theme.scale(25),
+        },
         modal: {
             height: theme.scale(230),
-            backgroundColor: 'rgba(13, 13, 13, 0.8)',
+            backgroundColor: theme.rgba(theme.black, 0.8),
             borderTopLeftRadius: theme.scale(20),
             borderTopRightRadius: theme.scale(20),
             paddingTop: theme.scale(20),

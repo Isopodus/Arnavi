@@ -30,17 +30,17 @@ export default function SearchBox(props) {
     const [recentPlacesList, setRecentPlacesList] = React.useState([]);
 
     let inputRef = React.useRef(null);
-    const fadeBackground = React.useRef(new Animated.Value(0)).current;
+    const fadeAnimation = React.useRef(new Animated.Value(0)).current;
 
     const onEndSearching = React.useCallback(() => {
         setText('');
         Keyboard.dismiss();
-        Animated.timing(fadeBackground, {
+        Animated.timing(fadeAnimation, {
             toValue: 0,
             easing: Easing.linear(),
             duration: 300
         }).start(() => setSearching(false));
-    }, [fadeBackground, inputRef]);
+    }, [fadeAnimation, inputRef]);
     const onSelect = React.useCallback((place, recent = false) => {
         setPlacesList([]);
         onEndSearching();
@@ -80,13 +80,13 @@ export default function SearchBox(props) {
     }, [recentLocations]);
     React.useEffect(() => {
         if (searching) {
-            Animated.timing(fadeBackground, {
+            Animated.timing(fadeAnimation, {
                 toValue: 1,
                 easing: Easing.linear(),
                 duration: 300
             }).start();
         }
-    }, [searching, fadeBackground]);
+    }, [searching, fadeAnimation]);
     React.useEffect(() => {
         if (text !== '') {
             searchPlace(text, token, userLocation)
@@ -158,7 +158,7 @@ export default function SearchBox(props) {
             </View>
             {searching && (
                 <React.Fragment>
-                    <Animated.View style={[styles.searchList, { opacity: fadeBackground }]}>
+                    <Animated.View style={[styles.searchList, { opacity: fadeAnimation }]}>
                         <Text style={styles.placeholder}>
                             {`${text !== '' ? 'Top' : 'Last'} locations:`}
                         </Text>
@@ -219,7 +219,7 @@ export default function SearchBox(props) {
                             )
                         })}
                     </Animated.View>
-                    <Animated.View style={[styles.searchBackground, { opacity: fadeBackground }]} />
+                    <Animated.View style={[styles.searchBackground, { opacity: fadeAnimation }]} />
                 </React.Fragment>
             )}
         </React.Fragment>
