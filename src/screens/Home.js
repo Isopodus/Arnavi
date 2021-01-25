@@ -30,10 +30,10 @@ export default function Home() {
 
     const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
-    const onMoveToCurrentLocation = React.useCallback(() => {
+    const onMoveToCurrentLocation = React.useCallback((flag = true) => {
         const { lat, lng } = userLocation;
         if (lat && lng) {
-            setFollowUserMode(true);
+            flag && setFollowUserMode(true);
             mapRef && mapRef.animateToRegion({
                 longitude: lng,
                 latitude: lat,
@@ -99,7 +99,7 @@ export default function Home() {
                 .then(res => {
                     if (res.status === 200) {
                         const { geometry, formatted_address, photos, name } = res.data.result;
-                        setPins(prev => [...prev, { location: geometry.location, color: theme.textAccent }]);
+                        setPins(prev => [{ location: geometry.location, color: theme.textAccent }]);
                         AsyncStorage.getItem('@favorites')
                             .then((favorites) => {
                                 let isFavorite = false;
@@ -156,16 +156,38 @@ export default function Home() {
             />
             <SearchBox locked={!followUserMode} onClearLocation={onUnlocked} />
             <Animated.View style={[styles.btnBar, { bottom: movingAnimation }]}>
-                <TouchableOpacity onPress={onMoveToCurrentLocation}>
+                {selectedPlace.isFullData && (
+                    <React.Fragment>
+                        <TouchableOpacity onPress={onUnlocked}>
+                            <Icon
+                                name={'close'}
+                                color={theme.textAccent}
+                                size={theme.scale(25)}
+                                style={styles.roundBtn}
+                            />
+                        </TouchableOpacity>
+                        <View style={{ height: theme.scale(15) }} />
+                    </React.Fragment>
+                )}
+                {(selectedPlace.isFullData) && (
+                    <React.Fragment>
+                        <TouchableOpacity onPress={() => onMoveToLocation(selectedPlace.location)}>
+                            <Icon
+                                name={'map-marker-alt'}
+                                color={theme.textAccent}
+                                size={theme.scale(22)}
+                                style={styles.roundBtn}
+                            />
+                        </TouchableOpacity>
+                        <View style={{ height: theme.scale(15) }} />
+                    </React.Fragment>
+                )}
+                <TouchableOpacity onPress={() => onMoveToCurrentLocation(false)}>
                     <Icon
                         name={'my-location'}
                         color={theme.textAccent}
                         size={theme.scale(25)}
-                        style={{
-                            padding: theme.scale(10),
-                            backgroundColor: theme.rgba(theme.black, 0.8),
-                            borderRadius: 150/2
-                        }}
+                        style={styles.roundBtn}
                     />
                 </TouchableOpacity>
             </Animated.View>
@@ -232,6 +254,14 @@ function getStyles(theme) {
             width: '100%',
             flex: 1,
             paddingHorizontal: theme.scale(25),
+        },
+        roundBtn: {
+            ...theme.rowAlignedCenterVertical,
+            height: theme.scale(45),
+            width: theme.scale(45),
+            padding: theme.scale(10),
+            backgroundColor: theme.rgba(theme.black, 0.8),
+            borderRadius: 150/2,
         },
         modal: {
             height: theme.scale(230),
