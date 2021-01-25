@@ -19,6 +19,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.viromedia.bridge.ReactViroPackage;
 import com.airbnb.android.react.maps.MapsPackage;
+ import com.airbnb.android.react.lottie.LottiePackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +47,8 @@ public class MainApplication extends Application implements ReactApplication {
             new RNGestureHandlerPackage(),
             new RNCMaskedViewPackage(),
             new ReactViroPackage(ReactViroPackage.ViroPlatform.valueOf(BuildConfig.VR_PLATFORM)),
-            new MapsPackage()
+            new MapsPackage(),
+            new LottiePackage()
       );
     }
 
