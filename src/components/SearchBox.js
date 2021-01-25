@@ -7,6 +7,7 @@ import {convertDistance} from '../utils/Distance';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAction } from "../store";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 const Separator = () => {
     const theme = getTheme();
@@ -20,6 +21,7 @@ export default function SearchBox(props) {
     const styles = getStyles(getTheme());
     const {token, userLocation, recentLocations} = useSelector(state => state);
     const dispatch = useDispatch();
+    const { navigate } = useNavigation();
     const { locked, onClearLocation } = props;
 
     const [text, setText] = React.useState('');
@@ -144,12 +146,13 @@ export default function SearchBox(props) {
                             </TouchableOpacity>
                         )
                         : (
-                            <Icon
-                                name={'star-border'}
-                                color={theme.textAccent}
-                                size={theme.scale(22)}
-                                style={{ flex: 0.1 }}
-                            />
+                            <TouchableOpacity onPress={() => navigate('FavoriteLocations')} style={{ flex: 0.1 }}>
+                                <Icon
+                                    name={'star-border'}
+                                    color={theme.textAccent}
+                                    size={theme.scale(22)}
+                                />
+                            </TouchableOpacity>
                         )
                 )}
             </View>

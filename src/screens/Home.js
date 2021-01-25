@@ -10,6 +10,7 @@ import { getPlaceDetail } from '../utils/Geolocation';
 import { getDistance, convertDistance } from '../utils/Distance';
 import { setAction, cleanAction } from "../store";
 import { GOOGLE_API_KEY } from "../global/Constants";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const getImageUrl = (image) => {
     const { photo_reference, height, width } = image;
@@ -57,6 +58,33 @@ export default function Home() {
         setPins([]);
         dispatch(cleanAction('place'));
     }, []);
+    const onSelectFavoriteLocation = React.useCallback(() => {
+        AsyncStorage.getItem('@favorites')
+            .then(favorites => {
+                const data = favorites ? JSON.parse(favorites) : [];
+                if (selectedPlace.isFavorite) {
+                    AsyncStorage.setItem(
+                        '@favorites',
+                        JSON.stringify(data.filter(item => item.placeId !== selectedPlace.placeId))
+                    ).then(() => {
+                        dispatch(setAction('place', { isFavorite: !selectedPlace.isFavorite }));
+                    });
+                }
+                else {
+                    AsyncStorage.setItem(
+                        '@favorites',
+                        JSON.stringify(
+                            [
+                                ...data,
+                                { placeId: selectedPlace.placeId, address: selectedPlace.address }
+                            ]
+                        )
+                    ).then(() => {
+                        dispatch(setAction('place', { isFavorite: !selectedPlace.isFavorite }));
+                    });
+                }
+            });
+    }, [selectedPlace]);
 
     React.useEffect(() => {
         if (followUserMode) onMoveToCurrentLocation();
@@ -69,24 +97,34 @@ export default function Home() {
             getPlaceDetail(selectedPlace.placeId, token)
                 .then(res => {
                     if (res.status === 200) {
-                        const { geometry, formatted_address, rating, opening_hours, photos, name } = res.data.result;
+                        const { geometry, formatted_address, photos, name } = res.data.result;
                         setPins(prev => [...prev, { location: geometry.location, color: theme.textAccent }]);
-                        dispatch(
-                            setAction(
-                                'place',
-                                {
-                                    name,
-                                    location: geometry.location,
-                                    address: formatted_address,
-                                    rating,
-                                    opening_hours,
-                                    photo: photos.length !== 0 ? photos[0] : null,
-                                    distance: onGetDistance(geometry.location),
-                                    isFullData: true
+                        AsyncStorage.getItem('@favorites')
+                            .then((favorites) => {
+                                let isFavorite = false;
+
+                                if (favorites) {
+                                    JSON.parse(favorites).forEach((favorite) => {
+                                       if (favorite.placeId === selectedPlace.placeId) isFavorite = true;
+                                    });
                                 }
-                            )
-                        );
-                        onMoveToLocation({ lat: geometry.location.lat, lng: geometry.location.lng });
+
+                                dispatch(
+                                    setAction(
+                                        'place',
+                                        {
+                                            name,
+                                            location: geometry.location,
+                                            address: formatted_address,
+                                            photo: photos.length !== 0 ? photos[0] : null,
+                                            distance: onGetDistance(geometry.location),
+                                            isFavorite,
+                                            isFullData: true
+                                        }
+                                    )
+                                );
+                                onMoveToLocation({ lat: geometry.location.lat, lng: geometry.location.lng });
+                            })
                     }
                 });
         }
@@ -122,9 +160,21 @@ export default function Home() {
                                 resizeMode={'cover'}
                             />
                             <View style={styles.textBox}>
-                                <Text style={styles.primaryText} numberOfLines={1}>
-                                    {selectedPlace.name}
-                                </Text>
+                                <View style={theme.rowAlignedBetweenTop}>
+                                    <Text style={styles.primaryText} numberOfLines={1}>
+                                        {selectedPlace.name}
+                                    </Text>
+                                    <TouchableOpacity
+                                        style={{ paddingLeft: theme.scale(20) }}
+                                        onPress={onSelectFavoriteLocation}
+                                    >
+                                        <Icon
+                                            name={selectedPlace.isFavorite ? 'star' : 'star-border'}
+                                            color={theme.textAccent}
+                                            size={theme.scale(20)}
+                                        />
+                                    </TouchableOpacity>
+                                </View>
                                 <Text style={styles.secondaryText} numberOfLines={2}>
                                     {selectedPlace.address}
                                 </Text>

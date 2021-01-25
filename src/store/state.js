@@ -12,10 +12,9 @@ const initialState = {
       lat: null,
       lng: null
     },
-    rating: null,
-    opening_hours: null,
     photo: null,
     distance: null,
+    isFavorite: false,
     isFullData: false
   },
   recentLocations: []
