@@ -1,9 +1,11 @@
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import style from '../assets/map/style';
+import getTheme from "../global/Style";
 
 export default function MapContainer(props) {
-    const { fullscreen = true, onSetRef, pins, onPinClick } = props;
+    const { fullscreen = true, onSetRef, pins, onPinClick, points } = props;
+    const theme = getTheme();
 
     const markers = React.useMemo(() => {
         return pins.map((pin, idx) => {
@@ -36,6 +38,13 @@ export default function MapContainer(props) {
             customMapStyle={style}
         >
             {markers}
+            {points.length !== 0 && (
+                <Polyline
+                    coordinates={points}
+                    strokeColor={theme.rgba(theme.textAccent, 0.5)}
+                    strokeWidth={6}
+                />
+            )}
         </MapView>
     )
 }
