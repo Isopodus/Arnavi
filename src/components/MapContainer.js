@@ -1,10 +1,24 @@
 import React from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import style from '../assets/map/style';
-import getTheme from '../global/Style';
 
 export default function MapContainer(props) {
-    const { fullscreen = true, onSetRef } = props;
+    const { fullscreen = true, onSetRef, pins, onPinClick } = props;
+
+    const markers = React.useMemo(() => {
+        return pins.map((pin, idx) => {
+            const { color, location } = pin;
+            return(
+                <Marker
+                    onPress={() => onPinClick(pin.placeId)}
+                    pinColor={color}
+                    coordinate={{ latitude: location.lat, longitude: location.lng }}
+                    key={idx}
+                />
+            )
+        });
+    }, [pins]);
+
     return(
         <MapView
             ref={(map) => onSetRef(map)}
@@ -18,8 +32,10 @@ export default function MapContainer(props) {
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}
-            style={fullscreen && { height: '95%' }}
+            style={fullscreen && { height: '100%' }}
             customMapStyle={style}
-        />
+        >
+            {markers}
+        </MapView>
     )
 }

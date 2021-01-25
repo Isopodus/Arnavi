@@ -3,13 +3,16 @@ import { View } from 'react-native';
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Feather from 'react-native-vector-icons/Feather';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-const iconsMaterialIcons = ['my-location', 'search', 'star-border', 'arrow-back'];
-const iconFeatherIcons = ['arrow-up-left'];
+const iconsMaterialIcons = ['my-location', 'search', 'star-border', 'arrow-back', 'access-time', 'close', 'star'];
+const iconsFeather = ['arrow-up-left'];
+const iconsFontAwesome5 = ['map-marker-alt'];
 
 const selectIcon = (name) => {
   if (iconsMaterialIcons.includes(name)) return MaterialIcons;
-  if (iconFeatherIcons.includes(name)) return Feather;
+  if (iconsFeather.includes(name)) return Feather;
+  if (iconsFontAwesome5.includes(name)) return FontAwesome5;
 };
 
 export default function Icon(props) {

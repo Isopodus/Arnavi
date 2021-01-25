@@ -7,8 +7,8 @@ import {store, setAction} from "./src/store";
 import UUIDGenerator from 'react-native-uuid-generator';
 import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-
 import Navigator from "./src/Navigator";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function AppRoot() {
     const dispatch = useDispatch();
@@ -73,6 +73,18 @@ function AppRoot() {
         UUIDGenerator.getRandomUUID((uuid) => {
             dispatch(setAction('token', uuid));
         });
+    }, []);
+
+    // Check history of traveling
+    React.useEffect(() => {
+        AsyncStorage.getItem('@history')
+            .then(history => {
+                if (history) {
+                    JSON.parse(history).forEach(item => {
+                        dispatch(setAction('history', item));
+                    });
+                }
+            });
     }, []);
 
     return (

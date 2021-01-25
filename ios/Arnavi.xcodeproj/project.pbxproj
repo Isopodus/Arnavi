@@ -58,6 +58,7 @@
 		C73CC12E7E1F4F58B6E86A80 /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21B009C8DC5940718036D92D /* Nunito-SemiBold.ttf */; };
 		FC93CDC970E14CF9A055CDC3 /* libRNUUIDGenerator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 739A69AA00734597B0A32F73 /* libRNUUIDGenerator.a */; };
 		BD7883E803004E22B9854F98 /* libRNCGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4271072104E74792A6ABD97F /* libRNCGeolocation.a */; };
+		CB52099F2F474148A9891F6D /* libRNCAsyncStorage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C644C1134D5D4461956F1620 /* libRNCAsyncStorage.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -395,6 +396,8 @@
 		739A69AA00734597B0A32F73 /* libRNUUIDGenerator.a */ = {isa = PBXFileReference; name = "libRNUUIDGenerator.a"; path = "libRNUUIDGenerator.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		B30E8AACA9B149F9933D476C /* RNCGeolocation.xcodeproj */ = {isa = PBXFileReference; name = "RNCGeolocation.xcodeproj"; path = "../node_modules/@react-native-community/geolocation/ios/RNCGeolocation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		4271072104E74792A6ABD97F /* libRNCGeolocation.a */ = {isa = PBXFileReference; name = "libRNCGeolocation.a"; path = "libRNCGeolocation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		F91AB7ED0BDB4F21A794E285 /* RNCAsyncStorage.xcodeproj */ = {isa = PBXFileReference; name = "RNCAsyncStorage.xcodeproj"; path = "../node_modules/@react-native-async-storage/async-storage/ios/RNCAsyncStorage.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C644C1134D5D4461956F1620 /* libRNCAsyncStorage.a */ = {isa = PBXFileReference; name = "libRNCAsyncStorage.a"; path = "libRNCAsyncStorage.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -435,6 +438,7 @@
 				2450A659D41F461186244166 /* libAirMaps.a in Frameworks */,
 				FC93CDC970E14CF9A055CDC3 /* libRNUUIDGenerator.a in Frameworks */,
 				BD7883E803004E22B9854F98 /* libRNCGeolocation.a in Frameworks */,
+				CB52099F2F474148A9891F6D /* libRNCAsyncStorage.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,6 +643,7 @@
 				6FE530B8CA124E48BB7E180A /* AirMaps.xcodeproj */,
 				CACCB50406494DAC9275D070 /* RNUUIDGenerator.xcodeproj */,
 				B30E8AACA9B149F9933D476C /* RNCGeolocation.xcodeproj */,
+				F91AB7ED0BDB4F21A794E285 /* RNCAsyncStorage.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1281,6 +1286,20 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Arnavi.app/Arnavi";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1296,6 +1315,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-maps\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Debug;
@@ -1317,6 +1337,20 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Arnavi.app/Arnavi";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1332,6 +1366,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-sensors\ios",
 					"$(SRCROOT)\..\node_modules\react-native-heading",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Release;
@@ -1366,6 +1401,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-sensors\ios",
 					"$(SRCROOT)\..\node_modules\react-native-heading",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Debug;
@@ -1399,6 +1435,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-maps\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Release;
@@ -1428,6 +1465,20 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1443,6 +1494,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-maps\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Debug;
@@ -1472,6 +1524,20 @@
 				TVOS_DEPLOYMENT_TARGET = 9.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1487,6 +1553,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-maps\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Release;
@@ -1515,6 +1582,20 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1530,6 +1611,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-maps\lib\ios/**",
 					"$(SRCROOT)\..\node_modules\react-native-uuid-generator\ios",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Debug;
@@ -1558,6 +1640,20 @@
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1573,6 +1669,7 @@
 					"$(SRCROOT)\..\node_modules\react-native-sensors\ios",
 					"$(SRCROOT)\..\node_modules\react-native-heading",
 					"$(SRCROOT)\..\node_modules\@react-native-community\geolocation\ios",
+					"$(SRCROOT)\..\node_modules\@react-native-async-storage\async-storage\ios/**",
 				);
 			};
 			name = Release;

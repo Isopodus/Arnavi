@@ -14,10 +14,6 @@ export default function reducers(state = initialState, action) {
       const { payload } = action;
       return { ...state, token: payload };
     }
-    case "CLEAN_TOKEN": {
-      const { token } = initialState;
-      return { ...state, token };
-    }
     case "SET_PLACE": {
       const { payload } = action;
       let { selectedPlace } = state;
@@ -29,6 +25,17 @@ export default function reducers(state = initialState, action) {
     case "CLEAN_PLACE": {
       const { selectedPlace } = initialState;
       return { ...state, selectedPlace };
+    }
+    case "SET_RECENT_LOCATIONS": {
+      const { payload } = action;
+      let { recentLocations } = state;
+
+      recentLocations =
+          recentLocations.length === 6
+              ? [...recentLocations.slice(1), payload]
+              : [...recentLocations, payload];
+
+      return { ...state, recentLocations };
     }
     default: return state;
   }

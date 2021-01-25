@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.heanoria.library.reactnative.locationenabler.RNAndroidLocationEnablerPackage;
+import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.joshblour.reactnativeheading.ReactNativeHeadingPackage;
 import com.reactnativecommunity.geolocation.GeolocationPackage;
 import io.github.traviskn.rnuuidgenerator.RNUUIDGeneratorPackage;
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
             new RNAndroidLocationEnablerPackage(),
+            new AsyncStoragePackage(),
             new GeolocationPackage(),
             new RNUUIDGeneratorPackage(),
             new VectorIconsPackage(),
