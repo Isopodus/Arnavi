@@ -11,17 +11,21 @@ import { getDistance, convertDistance } from '../utils/Distance';
 import { setAction, cleanAction } from "../store";
 import { GOOGLE_API_KEY } from "../global/Constants";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from "@react-navigation/native";
 
 const getImageUrl = (image) => {
     const { photo_reference, height, width } = image;
     return `https://maps.googleapis.com/maps/api/place/photo?key=${GOOGLE_API_KEY}&photoreference=${photo_reference}&maxheight=${height}&maxwidth=${width}`;
 };
 
+let movedToCurrent = false;
 export default function Home() {
     const theme = getTheme();
     const styles = getStyles(theme);
     const {token, userLocation, selectedPlace} = useSelector(state => state);
+
     const dispatch = useDispatch();
+    const navigator = useNavigation();
 
     const [followUserMode, setFollowUserMode] = React.useState(true);
     const [mapRef, setMapRef] = React.useState(null);
@@ -31,6 +35,7 @@ export default function Home() {
     const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
     const onMoveToCurrentLocation = React.useCallback((flag = true) => {
+        console.log(followUserMode, flag, userLocation)
         const { lat, lng } = userLocation;
         if (lat && lng) {
             flag && setFollowUserMode(true);
@@ -92,6 +97,12 @@ export default function Home() {
         if (followUserMode) onMoveToCurrentLocation();
     }, [followUserMode]);
     React.useEffect(() => {
+        if (!movedToCurrent && userLocation.lat !== null && userLocation.lng !== null) {
+            onMoveToCurrentLocation();
+            movedToCurrent = true;
+        }
+    }, [userLocation]);
+    React.useEffect(() => {
         if (selectedPlace.placeId) {
             setFollowUserMode(false);
             setModal(true);
@@ -129,7 +140,7 @@ export default function Home() {
                     }
                 });
         }
-    }, [selectedPlace.placeId, token, userLocation]);
+    }, [selectedPlace.placeId, token]);
     React.useEffect(() => {
         if (modal) {
             Animated.timing(movingAnimation, {
@@ -229,7 +240,7 @@ export default function Home() {
                         </View>
                         <Button
                             text={'Create route'}
-                            onPress={() => {}}
+                            onPress={() => navigator.navigate('AR')}
                             containerStyle={{ flex: 1, width: '100%', marginTop: theme.scale(22) }}
                         />
                     </View>

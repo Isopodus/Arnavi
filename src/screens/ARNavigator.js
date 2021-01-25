@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, View, Vibration, Text} from 'react-native';
+import {View, Vibration, Text, TouchableOpacity} from 'react-native';
 
 const {DeviceEventEmitter} = require('react-native');
 const ReactNativeHeading = require('react-native-heading');
@@ -8,11 +8,12 @@ import {
     ViroARSceneNavigator,
     ViroMaterials,
 } from 'react-viro';
-import {NavigatorScene} from "../components";
+import {Icon, NavigatorScene} from "../components";
 import { connect } from 'react-redux';
 
 import {bearing, calcCrow, rotatePoint} from "../utils/Coordinates";
 import ARWaypointMarker from "../components/ARWaypointMarker";
+import getTheme from "../global/Style";
 
 class ARNavigator extends Component {
 
@@ -39,10 +40,10 @@ class ARNavigator extends Component {
     constructor() {
         super();
 
-        this.sceneRef = React.createRef();
-        this.heading = 0;
+        this.sceneRef = null;
         this.state = {
             waypointIdx: 0,
+            heading: 0,
             initialHeading: null,
             initialPosition: null,
         };
@@ -57,11 +58,12 @@ class ARNavigator extends Component {
             })
 
         DeviceEventEmitter.addListener('headingUpdated', data => {
+            const {initialHeading} = this.state;
             data = (data + 360) % 360;
-            this.heading = data;
-            if (this.state.initialHeading === null) {
-                this.setState({initialHeading: data});
-            }
+            this.setState({
+                initialHeading: this.state.initialHeading === null ? data : initialHeading,
+                heading: data,
+            });
         });
     }
 
@@ -129,33 +131,63 @@ class ARNavigator extends Component {
         }
     }
 
+    updateInitialHeadingAndCamera = () => {
+        const {heading} = this.state;
+        this.setState({
+            initialHeading: heading,
+        });
+    }
+
     render() {
+        const theme = getTheme();
+        const styles = getStyles(theme);
         const {userLocation} = this.props;
-        const {waypointIdx} = this.state;
+        const {waypointIdx, heading} = this.state;
+        const isDone = !!!this.waypoints[waypointIdx];
 
         let distance = 0;
-        if (this.waypoints[waypointIdx])
+        let angle = 0;
+        if (!isDone) {
             distance = calcCrow(
                 userLocation.lat, userLocation.lng,
                 this.waypoints[waypointIdx].lat, this.waypoints[waypointIdx].lng
-        );
+            );
+            angle = heading - bearing(
+                userLocation.lat, userLocation.lng,
+                this.waypoints[waypointIdx].lat, this.waypoints[waypointIdx].lng
+            );
+        }
         return (
             <View style={{flex: 1}}>
                 <ViroARSceneNavigator
-                    ref={this.sceneRef}
+                    autofocus
+                    ref={(ref) => this.sceneRef = ref}
                     viroAppProps={{
-                        waypoint: this.drawWaypoint(this.waypoints[waypointIdx], waypointIdx)
+                        waypoint: this.drawWaypoint(this.waypoints[waypointIdx], waypointIdx),
+                        onTrackingUpdated: this.updateInitialHeadingAndCamera,
                     }}
                     initialScene={{
                         scene: NavigatorScene,
                     }}
                 />
-                <Button
-                    title='Next waypoint'
-                    onPress={this.onNextWaypoint}
-                    style={style.buttonNext}
-                />
-                <Text style={style.text}>{`${userLocation.lat}, ${userLocation.lng}, ${distance}`}</Text>
+                <View style={styles.compassContainer}>
+                    <Icon
+                        name={isDone ? 'check' : 'navigation'}
+                        color={theme.textAccent}
+                        size={theme.scale(40)}
+                        style={[styles.roundWaypointCompass, {
+                            transform: [
+                                { rotateZ: `${-angle}deg` },
+                            ]}]
+                        }
+                    />
+                </View>
+                {!isDone && <TouchableOpacity onPress={() => this.onNextWaypoint()} style={styles.touchableNext}>
+                    <View style={styles.roundNextBtn}>
+                        <Text style={styles.primaryText}>Next</Text>
+                    </View>
+                </TouchableOpacity>}
+                <Text style={styles.text}>{`${userLocation.lat}, ${userLocation.lng}, ${distance}`}</Text>
             </View>
         );
     }
@@ -167,14 +199,44 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, null)(ARNavigator);
 
-const style ={
-    buttonNext: {
-        position: 'absolute',
-        bottom: 0,
-    },
-    text: {
-        position: 'absolute',
-        top: 0,
+function getStyles(theme) {
+    return {
+        roundWaypointCompass: {
+            ...theme.rowAlignedCenterVertical,
+            height: theme.scale(80),
+            width: theme.scale(80),
+            padding: theme.scale(10),
+            backgroundColor: theme.rgba(theme.black, 0.8),
+            borderRadius: 150 / 2,
+        },
+        roundNextBtn: {
+            ...theme.rowAlignedCenterVertical,
+            height: theme.scale(65),
+            width: theme.scale(65),
+            padding: theme.scale(10),
+            backgroundColor: theme.rgba(theme.black, 0.8),
+            borderRadius: 150 / 2,
+        },
+        compassContainer: {
+            position: 'absolute',
+            bottom: theme.scale(50),
+            alignSelf: 'center',
+        },
+        touchableNext: {
+            position: 'absolute',
+            bottom: theme.scale(25),
+            right: theme.scale(25),
+        },
+        primaryText: theme.textStyle({
+            font: 'NunitoBold',
+            color: 'textAccent',
+            size: 16,
+            align: 'left'
+        }),
+        text: {
+            position: 'absolute',
+            top: 0,
+        }
     }
 }
 
