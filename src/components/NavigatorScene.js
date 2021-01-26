@@ -13,16 +13,26 @@ export default class NavigatorScene extends React.Component {
 
     onTrackingUpdated = (state, reason) => {
         const {isTrackingGood} = this.state;
-        const {updateTrackingStatus, updateInitialHeading} = this.props.arSceneNavigator.viroAppProps;
+        const {updateTrackingStatus, updateInitialHeading,
+            onTrackingLost, onTrackingRecovered,
+        } = this.props.arSceneNavigator.viroAppProps;
 
         if (state === ViroConstants.TRACKING_UNAVAILABLE && isTrackingGood !== null) {
             console.log('tracking unavailable');
+
+            if (isTrackingGood === true) {
+                onTrackingLost()
+            }
+
             this.setState({isTrackingGood: false});
-            updateTrackingStatus(false, true)
         } else if (state === ViroConstants.TRACKING_LIMITED && isTrackingGood !== null) {
             console.log('tracking limited');
+
+            if (isTrackingGood === false) {
+                onTrackingRecovered()
+            }
+
             this.setState({isTrackingGood: true});
-            updateTrackingStatus(false, true)
         } else if (state === ViroConstants.TRACKING_NORMAL) {
             console.log('tracking normal');
 
@@ -30,20 +40,22 @@ export default class NavigatorScene extends React.Component {
                 updateTrackingStatus(true, true)
                 updateInitialHeading();
                 console.log('tracking init')
+            } else if (isTrackingGood === false) {
+                onTrackingRecovered();
             }
 
             this.setState({isTrackingGood: true});
         }
 
-        if (reason === ViroConstants.TRACKING_REASON_EXCESSIVE_MOTION) {
-            console.log('too much motion');
-        } else if (reason === ViroConstants.TRACKING_REASON_INSUFFICIENT_FEATURES ) {
-            console.log('bad scene for camera');
-        }
+        // if (reason === ViroConstants.TRACKING_REASON_EXCESSIVE_MOTION) {
+        //     console.log('too much motion');
+        // } else if (reason === ViroConstants.TRACKING_REASON_INSUFFICIENT_FEATURES ) {
+        //     console.log('bad scene for camera');
+        // }
     }
 
     onCameraTransformUpdate = ({cameraTransform}) => {
-        console.log(cameraTransform.rotation[1]);
+        //console.log(cameraTransform.rotation[1]);
     }
 
 

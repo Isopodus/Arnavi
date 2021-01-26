@@ -40,6 +40,8 @@ class ARNavigator extends Component {
     constructor() {
         super();
 
+        this.headingOnTrackingLost = 0;
+        this.headingAfterTrackingLost = 0;
         this.state = {
             waypointIdx: 0,
             heading: 0,
@@ -47,6 +49,7 @@ class ARNavigator extends Component {
             initialPosition: null,
             trackingInitialized: false,
             trackingGood: false,
+            trackingHeadingFix: 0,
         };
     }
 
@@ -92,15 +95,35 @@ class ARNavigator extends Component {
         })
     }
 
+    onTrackingLost = () => {
+        const {heading} = this.state;
+        console.log('lost', heading);
+        this.headingOnTrackingLost = heading;
+    }
+
+    onTrackingRecovered = () => {
+        const {heading, trackingHeadingFix} = this.state;
+        console.log('recovered', heading);
+        this.headingAfterTrackingLost = heading;
+        this.updateTrackingStatus(true, true);
+        const fix = this.headingOnTrackingLost - this.headingAfterTrackingLost;
+
+        console.log('fix', fix);
+
+        this.setState({
+            trackingHeadingFix: trackingHeadingFix + fix,
+        });
+    }
+
     componentWillUnmount() {
         ReactNativeHeading.stop();
         DeviceEventEmitter.removeAllListeners('headingUpdated');
     }
 
     drawWaypoint = (waypointLocation, key) => {
-        const {initialHeading, initialPosition} = this.state;
+        const {initialHeading, initialPosition, trackingHeadingFix} = this.state;
 
-        console.log(initialHeading, !!initialPosition)
+        //-console.log(initialHeading, !!initialPosition)
         if (waypointLocation && initialHeading !== null && initialPosition !== null) {
             const distance = calcCrow(
                 initialPosition.lat, initialPosition.lng,
@@ -111,7 +134,7 @@ class ARNavigator extends Component {
                 waypointLocation.lat, waypointLocation.lng
             );
             let point = [0, 0, -distance];
-            point = rotatePoint(point, angle - initialHeading);
+            point = rotatePoint(point, angle - initialHeading + trackingHeadingFix);
 
             //console.log(distance, angle, initialHeading, point);
 
@@ -169,6 +192,8 @@ class ARNavigator extends Component {
                         waypoint: this.drawWaypoint(this.waypoints[waypointIdx], waypointIdx),
                         updateInitialHeading: this.updateInitialHeading,
                         updateTrackingStatus: this.updateTrackingStatus,
+                        onTrackingLost: this.onTrackingLost,
+                        onTrackingRecovered: this.onTrackingRecovered,
                     }}
                     initialScene={{
                         scene: NavigatorScene,
@@ -243,9 +268,3 @@ function getStyles(theme) {
         }
     }
 }
-
-ViroMaterials.createMaterials({
-    arrow: {
-        diffuseTexture: require('../assets/arrow.jpg')
-    }
-});

@@ -12,8 +12,8 @@ export default function ARWaypointMarker(props) {
     // }
     return <Viro3DObject
         //ref={ref}
-        source={require("./res/arrow.obj")}
-        resources={[require('./res/arrow.mtl')]}
+        source={require("./res/obj/arrow.obj")}
+        resources={[require('./res/mtl/arrow.mtl')]}
         type="OBJ"
         transformBehaviors={["billboard"]}
 
