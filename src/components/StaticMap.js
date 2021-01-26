@@ -135,7 +135,7 @@ export default function StaticMap(props) {
                     else Toast.show('Unable to connect', Toast.SHORT);
                 });
         }
-    }, [selectedPlace.placeId, token, userLocation]);
+    }, [selectedPlace.placeId, token]);
     React.useEffect(() => {
         if (modal) {
             Animated.timing(movingAnimation, {

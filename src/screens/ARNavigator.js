@@ -40,7 +40,6 @@ class ARNavigator extends Component {
     constructor() {
         super();
 
-        this.sceneRef = null;
         this.state = {
             waypointIdx: 0,
             heading: 0,
@@ -52,6 +51,7 @@ class ARNavigator extends Component {
     componentDidMount() {
         ReactNativeHeading.start(1)
             .then(didStart => {
+                console.log(didStart);
                 this.setState({
                     headingIsSupported: didStart,
                 })
@@ -131,18 +131,11 @@ class ARNavigator extends Component {
         }
     }
 
-    updateInitialHeadingAndCamera = () => {
-        const {heading} = this.state;
-        this.setState({
-            initialHeading: heading,
-        });
-    }
-
     render() {
         const theme = getTheme();
         const styles = getStyles(theme);
         const {userLocation} = this.props;
-        const {waypointIdx, heading, initialHeading} = this.state;
+        const {waypointIdx, heading} = this.state;
         const isDone = !!!this.waypoints[waypointIdx];
 
         let distance = 0;
@@ -160,10 +153,8 @@ class ARNavigator extends Component {
         return (
             <View style={{flex: 1}}>
                 <ViroARSceneNavigator
-                    ref={(ref) => this.sceneRef = ref}
                     viroAppProps={{
                         waypoint: this.drawWaypoint(this.waypoints[waypointIdx], waypointIdx),
-                        onTrackingUpdated: this.updateInitialHeadingAndCamera,
                     }}
                     initialScene={{
                         scene: NavigatorScene,

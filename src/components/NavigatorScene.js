@@ -16,9 +16,6 @@ export default class NavigatorScene extends React.Component {
     }
 
     onTrackingUpdated = (state, reason) => {
-        const {onTrackingUpdated} = this.props.arSceneNavigator.viroAppProps;
-        onTrackingUpdated();
-
         console.log('tracking updated');
         if (state === ViroConstants.TRACKING_UNAVAILABLE) {
             console.log('unavailable');
@@ -39,7 +36,7 @@ export default class NavigatorScene extends React.Component {
     }
 
     onCameraTransformUpdate = ({cameraTransform}) => {
-        console.log(cameraTransform.rotation[1]);
+        //console.log(cameraTransform.rotation[1]);
     }
 
 

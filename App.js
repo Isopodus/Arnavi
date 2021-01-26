@@ -28,22 +28,18 @@ function AppRoot() {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
             const setLocationWatch = () => {
-                Geolocation.getCurrentPosition((info) => {
-                    const {longitude, latitude} = info.coords;
-                    dispatch(setAction('location', {lat: latitude, lng: longitude}));
-                    dispatch(setAction('app'));
-                }, askGPS);
-
-                locationWatch = Geolocation.watchPosition(info => {
-                        const {longitude, latitude} = info.coords;
-                        dispatch(setAction('location', {lat: latitude, lng: longitude}));
-                    },
-                    {
-                        distanceFilter: 0,
-                        timeout: 5000,
-                        maximumAge: 10000,
-                        enableHighAccuracy: true
-                    });
+                locationWatch = setInterval(() => {
+                    Geolocation.getCurrentPosition((info) => {
+                            const {longitude, latitude} = info.coords;
+                            dispatch(setAction('location', {lat: latitude, lng: longitude}));
+                            dispatch(setAction('app'));
+                        }, askGPS,
+                        {
+                            timeout: 5000,
+                            maximumAge: 10000,
+                            enableHighAccuracy: true
+                        });
+                }, 1000);
             };
 
             // Ask to turn on GPS
@@ -79,8 +75,8 @@ function AppRoot() {
     // Clear location on unmount
     React.useEffect(() => {
         return () => {
-            if (locationWatch) {
-                Geolocation.clearWatch(locationWatch);
+            if (locationWatch !== null) {
+               clearInterval(locationWatch);
             }
         };
     }, []);
