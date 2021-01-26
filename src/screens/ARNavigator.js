@@ -8,12 +8,13 @@ import {
     ViroARSceneNavigator,
     ViroMaterials,
 } from 'react-viro';
-import {Icon, NavigatorScene} from "../components";
+import {Icon, MapContainer, NavigatorScene} from "../components";
 import { connect } from 'react-redux';
 
 import {bearing, calcCrow, rotatePoint} from "../utils/Coordinates";
-import ARWaypointMarker from "../components/ARWaypointMarker";
+import {ARWaypointMarker} from "../components";
 import getTheme from "../global/Style";
+import LinearGradient from "react-native-linear-gradient";
 
 class ARNavigator extends Component {
 
@@ -86,20 +87,20 @@ class ARNavigator extends Component {
     updateInitialHeading = () => {
         const {heading} = this.state;
         this.setState({initialHeading: heading})
-    }
+    };
 
     updateTrackingStatus = (isNormal, isInitialized) => {
         this.setState({
             trackingInitialized: isInitialized,
             trackingGood: isNormal,
         })
-    }
+    };
 
     onTrackingLost = () => {
         const {heading} = this.state;
         console.log('lost', heading);
         this.headingOnTrackingLost = heading;
-    }
+    };
 
     onTrackingRecovered = () => {
         const {heading, trackingHeadingFix} = this.state;
@@ -113,7 +114,7 @@ class ARNavigator extends Component {
         this.setState({
             trackingHeadingFix: trackingHeadingFix + fix,
         });
-    }
+    };
 
     componentWillUnmount() {
         ReactNativeHeading.stop();
@@ -141,17 +142,17 @@ class ARNavigator extends Component {
             return <ARWaypointMarker point={point} key={key}/>;
         }
         return null;
-    }
+    };
 
 
     onNextWaypoint = () => {
-        console.log('new waypoint idx:', this.state.waypointIdx+1)
+        console.log('new waypoint idx:', this.state.waypointIdx+1);
 
         this.setState({
             waypointIdx: this.state.waypointIdx+1,
         });
         Vibration.vibrate([0, 150, 20, 150]);
-    }
+    };
 
     checkIfNextWaypoint = (waypointLocation) => {
         if (waypointLocation) {
@@ -164,7 +165,7 @@ class ARNavigator extends Component {
                 this.onNextWaypoint();
             }
         }
-    }
+    };
 
     render() {
         const theme = getTheme();
@@ -199,6 +200,19 @@ class ARNavigator extends Component {
                         scene: NavigatorScene,
                     }}
                 />
+                <LinearGradient
+                    colors={[theme.rgba(theme.black, 1), theme.rgba(theme.black, 0)]}
+                    style={styles.gradient}
+                />
+                <View style={styles.circle} />
+                <TouchableOpacity onPress={() => {}} style={styles.touchableDetail}>
+                    <Icon
+                        name={'layers-outline'}
+                        color={theme.textAccent}
+                        size={theme.scale(30)}
+                        style={styles.roundNextBtn}
+                    />
+                </TouchableOpacity>
                 <View style={styles.compassContainer}>
                     <Icon
                         name={isDone ? 'check' : 'navigation'}
@@ -248,8 +262,13 @@ function getStyles(theme) {
         },
         compassContainer: {
             position: 'absolute',
-            bottom: theme.scale(50),
+            bottom: ((theme.fullWidth / 1.5) / 2) - theme.scale(35),
             alignSelf: 'center',
+        },
+        touchableDetail: {
+            position: 'absolute',
+            bottom: theme.scale(25),
+            left: theme.scale(25),
         },
         touchableNext: {
             position: 'absolute',
@@ -263,6 +282,24 @@ function getStyles(theme) {
             align: 'left'
         }),
         text: {
+            position: 'absolute',
+            top: 0,
+        },
+        circle: {
+            flex: 1,
+            position: 'absolute',
+            width: theme.fullWidth,
+            height: theme.fullWidth,
+            bottom: -(theme.fullWidth / 1.5),
+            borderWidth: theme.scale(3),
+            borderColor: theme.rgba(theme.textAccent, 0.6),
+            borderStyle: 'solid',
+            borderRadius: theme.fullWidth / 2,
+        },
+        gradient: {
+            flex: 1,
+            width: '100%',
+            height: theme.scale(250),
             position: 'absolute',
             top: 0,
         }
