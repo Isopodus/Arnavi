@@ -187,6 +187,19 @@ export default function StaticMap(props) {
                         style={styles.roundBtn}
                     />
                 </TouchableOpacity>
+                {(selectedPlace.isFullData && !modal) && (
+                    <React.Fragment>
+                        <View style={{ height: theme.scale(15) }} />
+                        <TouchableOpacity onPress={() => setModal(true)}>
+                            <Icon
+                                name={'layers-outline'}
+                                color={theme.textAccent}
+                                size={theme.scale(25)}
+                                style={styles.roundBtn}
+                            />
+                        </TouchableOpacity>
+                    </React.Fragment>
+                )}
             </Animated.View>
             <Popup visible={modal} style={styles.modal} onClose={() => setModal(false)}>
                 {selectedPlace.isFullData && (
