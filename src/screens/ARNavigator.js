@@ -16,6 +16,7 @@ import {ARWaypointMarker} from "../components";
 import getTheme from "../global/Style";
 import LinearGradient from "react-native-linear-gradient";
 import { convertDistance } from '../utils/Distance';
+import {cleanAction} from "../store";
 
 class ARNavigator extends Component {
 
@@ -53,7 +54,8 @@ class ARNavigator extends Component {
             trackingInitialized: false,
             trackingGood: false,
             trackingHeadingFix: 0,
-            modal: false
+            modal: false,
+            mapRef: null
         };
     }
 
@@ -200,6 +202,8 @@ class ARNavigator extends Component {
                 text: "YES",
                 onPress: () => {
                     this.props.navigation.navigate('Home');
+                    this.props.cleanBounds();
+
                 }
             }
         ]);
@@ -209,8 +213,8 @@ class ARNavigator extends Component {
     render() {
         const theme = getTheme();
         const styles = getStyles(theme);
-        const {userLocation, directions, selectedPlace} = this.props;
-        const {waypointIdx, heading, startPosition} = this.state;
+        const {userLocation, directions, selectedPlace, bounds} = this.props;
+        const {waypointIdx, heading, startPosition, mapRef} = this.state;
 
         let waypoint = directions[waypointIdx];
         if (waypoint) {
@@ -234,6 +238,27 @@ class ARNavigator extends Component {
                 waypoint.lat, waypoint.lng
             );
         }
+
+        const points = (directions.map((step) => {
+            const { start_location, end_location } = step;
+            return(
+                [
+                    { latitude: start_location.lat, longitude: start_location.lng },
+                    { latitude: end_location.lat, longitude: end_location.lng }
+                ]
+            )
+        })).flat();
+
+        if (mapRef) {
+            mapRef.fitToCoordinates(
+                bounds,
+                {
+                    edgePadding: { right: theme.scale(30), left: theme.scale(30) },
+                    animated: true
+                }
+            );
+        }
+
         return (
             <View style={{flex: 1}}>
                 <ViroARSceneNavigator
@@ -300,8 +325,21 @@ class ARNavigator extends Component {
                         { position: 'absolute', bottom: theme.scale(20), flex: 1, width: '100%' }
                     ]}
                 >
-                    <Text style={styles.text}>{convertDistance(distance)}</Text>
-                    <Text style={[styles.text, { fontSize: theme.scale(13) }]}>to the next point</Text>
+                    {distance !== 0
+                        ? (
+                            <React.Fragment>
+                                <Text style={styles.text}>{convertDistance(distance)}</Text>
+                                <Text style={[styles.text, { fontSize: theme.scale(13) }]}>
+                                    to the next point
+                                </Text>
+                            </React.Fragment>
+                        )
+                        : (
+                            <Text style={[ styles.text, { marginBottom: theme.scale(15) } ]}>
+                                Arrived to destination!
+                            </Text>
+                        )
+                    }
                 </View>
                 {!isDone && <TouchableOpacity onPress={() => this.onNextWaypoint()} style={styles.touchableNext}>
                     <View style={styles.roundNextBtn}>
@@ -312,6 +350,9 @@ class ARNavigator extends Component {
                     <View style={theme.rowAlignedCenterVertical}>
                         <View style={styles.bar} />
                         <MapContainer
+                            onSetRef={(mapRef) => this.setState({ mapRef })}
+                            points={points}
+                            pins={[{location: selectedPlace.location, color: theme.textAccent}]}
                             isCleanMap={true}
                             containerStyle={{ width: '100%', height: theme.scale(210) }}
                         />
@@ -325,10 +366,16 @@ class ARNavigator extends Component {
 const mapStateToProps = state => ({
     userLocation: state.userLocation,
     directions: state.directions,
-    selectedPlace: state.selectedPlace
+    selectedPlace: state.selectedPlace,
+    bounds: state.bounds
 });
+const mapDispatchToProps = dispatch => {
+    return {
+        cleanBounds: () => dispatch(cleanAction('bounds')),
+    }
+};
 
-export default connect(mapStateToProps, null)(ARNavigator);
+export default connect(mapStateToProps, mapDispatchToProps)(ARNavigator);
 
 function getStyles(theme) {
     return {

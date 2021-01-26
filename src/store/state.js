@@ -20,6 +20,7 @@ const initialState = {
   },
   recentLocations: [],
   directions: [],
+  bounds: []
 };
 
 export default initialState;

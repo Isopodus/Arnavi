@@ -48,6 +48,14 @@ export default function reducers(state = initialState, action) {
       const { directions } = initialState;
       return { ...state, directions };
     }
+    case "SET_BOUNDS": {
+      const { bounds } = action;
+      return { ...state, bounds };
+    }
+    case "CLEAN_BOUNDS": {
+      const { bounds } = initialState;
+      return { ...state, bounds };
+    }
     default: return state;
   }
 };

@@ -70,6 +70,8 @@ export default function DirectionMap(props) {
                         { latitude: bounds.southwest.lat, longitude: bounds.southwest.lng }
                     ];
 
+                    dispatch(setAction('bounds', coords));
+
                     let time = 0;
                     const points = (steps.map((step) => {
                         const { duration, start_location, end_location } = step;
