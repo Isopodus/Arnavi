@@ -82,9 +82,8 @@ class ARNavigator extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        const {userLocation, bounds} = this.props;
-        const {initialPosition, modal} = this.state;
-        const theme = getTheme();
+        const {userLocation} = this.props;
+        const {initialPosition} = this.state;
 
         if (prevProps.userLocation !== userLocation)
         {
@@ -111,6 +110,7 @@ class ARNavigator extends Component {
     onTrackingLost = () => {
         const {heading} = this.state;
         //console.log('lost', heading);
+        this.updateTrackingStatus(false, true);
         this.headingOnTrackingLost = heading;
     };
 
@@ -216,7 +216,7 @@ class ARNavigator extends Component {
         const theme = getTheme();
         const styles = getStyles(theme);
         const {userLocation, directions, selectedPlace} = this.props;
-        const {waypointIdx, heading, startPosition} = this.state;
+        const {waypointIdx, heading, startPosition, trackingGood, trackingInitialized} = this.state;
 
         let waypoint = directions[waypointIdx];
         if (waypoint) {
@@ -286,6 +286,14 @@ class ARNavigator extends Component {
                         <Text style={styles.secondaryHeaderText}>go to</Text>
                         <Text style={styles.headerText} numberOfLines={1}>{selectedPlace.name}</Text>
                     </View>
+                </View>
+                <View style={styles.trackingInfo}>
+                    {!trackingInitialized && <Text style={styles.statusTextYellow} numberOfLines={1}>Initializing AR...</Text>}
+                    {trackingInitialized && trackingGood && <Text style={styles.statusTextGreen} numberOfLines={1}>AR tracking nominal</Text>}
+                    {trackingInitialized && !trackingGood &&  <Text style={styles.statusTextRed} numberOfLines={2}>
+                        AR tracking lost!
+                        Point the camera on a better scene!
+                    </Text>}
                 </View>
                 <LinearGradient
                     colors={[theme.rgba(theme.black, 0.2), theme.rgba(theme.black, 1)]}
@@ -477,6 +485,29 @@ function getStyles(theme) {
             size: 18,
             align: 'center'
         }),
+        statusTextGreen: theme.textStyle({
+            font: 'NunitoBold',
+            color: 'textAccent',
+            size: 16,
+            align: 'center',
+        }),
+        statusTextYellow: theme.textStyle({
+            font: 'NunitoBold',
+            color: 'warning',
+            size: 16,
+            align: 'center',
+        }),
+        statusTextRed: theme.textStyle({
+            font: 'NunitoBold',
+            color: 'error',
+            size: 16,
+            align: 'center',
+        }),
+        trackingInfo: {
+            position: 'absolute',
+            top: theme.scale(75),
+            width: theme.fullWidth,
+        },
         secondaryHeaderText: [
             theme.textStyle({
                 font: 'NunitoRegular',

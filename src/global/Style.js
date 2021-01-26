@@ -6,7 +6,7 @@ const colors = {
   textSecondary: `#62656c`,
   textPlaceholder: `#c1c6cc`,
   textAccent: `#47cb78`,
-  error: `#cb6347`,
+  error: `#bf4a46`,
   warning: `#ffa500`,
   black: '#0d0d0d'
 };
