@@ -9,6 +9,7 @@ import Geolocation from '@react-native-community/geolocation';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Navigator from "./src/Navigator";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import SplashScreen from 'react-native-splash-screen';
 
 let locationWatch = null;
 
@@ -57,14 +58,15 @@ function AppRoot() {
                             setLocationWatch();
                         }
                     });
-            }
+            };
             askGPS();
         }
     };
 
-    // Hide status bar
+    // Hide status bar and splash screen
     React.useEffect(() => {
         StatusBar.setHidden(true);
+        SplashScreen.hide();
     }, []);
 
     // Set geolocation callbacks
