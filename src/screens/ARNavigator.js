@@ -151,8 +151,14 @@ class ARNavigator extends Component {
             point = rotatePoint(point, angle - initialHeading + trackingHeadingFix);
 
             //console.log(distance, angle, initialHeading, point);
+            let multiplier = 1;
+            if (distance >= 50) {
+                multiplier = distance / 50
+            }
 
-            return <ARWaypointMarker point={point} key={key}/>;
+            const scale = [multiplier, multiplier, multiplier];
+
+            return <ARWaypointMarker point={point} key={key} scale={scale}/>;
         }
         return null;
     };

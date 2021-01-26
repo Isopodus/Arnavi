@@ -2,7 +2,7 @@ import React from 'react';
 import {Viro3DObject} from "react-viro";
 
 export default function ARWaypointMarker(props) {
-    const {rotation, point} = props;
+    const {rotation, point, scale} = props;
     // const ref = React.useRef()
     //
     // if (ref.current) {
@@ -17,7 +17,7 @@ export default function ARWaypointMarker(props) {
         type="OBJ"
         transformBehaviors={["billboard"]}
 
-        scale={[1, 1, 1]}
+        scale={scale ?? [1, 1, 1]}
         position={point ?? [0, 0, 0]}
         rotation={rotation ?? [0, 0, 0]}/>
 };
