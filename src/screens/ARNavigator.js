@@ -159,7 +159,7 @@ class ARNavigator extends Component {
 
 
     onNextWaypoint = () => {
-        console.log('new waypoint idx:', this.state.waypointIdx+1);
+        //console.log('new waypoint idx:', this.state.waypointIdx+1);
         const {waypointIdx, startPosition} = this.state;
 
         this.setState({
@@ -299,7 +299,10 @@ class ARNavigator extends Component {
                         style={styles.roundNextBtn}
                     />
                 </TouchableOpacity>
-                <View style={styles.compassContainer}>
+                <TouchableOpacity style={styles.compassContainer}
+                                  onPress={() => this.props.navigation.navigate('Home')}
+                                  disabled={!isDone}
+                >
                     <Icon
                         name={isDone ? 'check' : 'navigation'}
                         color={theme.textAccent}
@@ -310,7 +313,7 @@ class ARNavigator extends Component {
                             ]}]
                         }
                     />
-                </View>
+                </TouchableOpacity>
                 <View
                     style={[
                         theme.rowAlignedCenterVertical,

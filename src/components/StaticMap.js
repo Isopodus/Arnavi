@@ -29,10 +29,11 @@ export default function StaticMap(props) {
 
     const movingAnimation = React.useRef(new Animated.Value(60)).current;
 
-    const onMoveToCurrentLocation = React.useCallback((flag = true) => {
+    const onMoveToCurrentLocation = React.useCallback((flag = true, callback) => {
         const { lat, lng } = userLocation;
         if (lat && lng) {
             flag && setFollowUserMode(true);
+            mapRef && callback ? callback() : null;
             mapRef && mapRef.animateToRegion({
                 longitude: lng,
                 latitude: lat,
@@ -91,8 +92,7 @@ export default function StaticMap(props) {
     }, [followUserMode]);
     React.useEffect(() => {
         if (!movedToCurrent && mapRef !== null && userLocation.lat !== null && userLocation.lng !== null) {
-            setTimeout(onMoveToCurrentLocation, 250);
-            movedToCurrent = true;
+            setTimeout(() => onMoveToCurrentLocation(true, () => movedToCurrent = true), 250);
         }
     }, [userLocation, mapRef]);
     React.useEffect(() => {
