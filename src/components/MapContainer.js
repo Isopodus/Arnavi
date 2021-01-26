@@ -12,7 +12,9 @@ export default function MapContainer(props) {
         points = [],
         onPress = () => {},
         isCleanMap = false,
-        containerStyle = {}
+        containerStyle = {},
+        onLayout = () => {},
+        noMoves = false,
     } = props;
     const theme = getTheme();
 
@@ -30,14 +32,15 @@ export default function MapContainer(props) {
         });
     }, [pins]);
 
+    //console.log(points);
     return(
         <MapView
             ref={(map) => onSetRef(map)}
             showsUserLocation={true}
             showsMyLocationButton={false}
-            scrollEnabled={true}
             provider={PROVIDER_GOOGLE}
             onPress={onPress}
+            onLayout={onLayout}
             initialRegion={{
                 latitude: 0,
                 longitude: 0,
@@ -46,6 +49,10 @@ export default function MapContainer(props) {
             }}
             style={[fullscreen && { height: '100%' }, containerStyle]}
             customMapStyle={isCleanMap ? styleClean : style}
+            pitchEnabled={!noMoves}
+            rotateEnabled={!noMoves}
+            zoomEnabled={!noMoves}
+            scrollEnabled={!noMoves}
         >
             {markers}
             {points.length !== 0 && (

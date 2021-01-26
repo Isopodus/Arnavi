@@ -43,6 +43,8 @@ class ARNavigator extends Component {
     constructor() {
         super();
 
+        this.mapRef = null;
+
         this.headingOnTrackingLost = 0;
         this.headingAfterTrackingLost = 0;
         this.state = {
@@ -55,7 +57,6 @@ class ARNavigator extends Component {
             trackingGood: false,
             trackingHeadingFix: 0,
             modal: false,
-            mapRef: null
         };
     }
 
@@ -80,9 +81,10 @@ class ARNavigator extends Component {
         );
     }
 
-    componentDidUpdate(prevProps) {
-        const {userLocation} = this.props;
-        const {initialPosition, waypoint} = this.state;
+    componentDidUpdate(prevProps, prevState) {
+        const {userLocation, bounds} = this.props;
+        const {initialPosition, modal} = this.state;
+        const theme = getTheme();
 
         if (prevProps.userLocation !== userLocation)
         {
@@ -213,8 +215,8 @@ class ARNavigator extends Component {
     render() {
         const theme = getTheme();
         const styles = getStyles(theme);
-        const {userLocation, directions, selectedPlace, bounds} = this.props;
-        const {waypointIdx, heading, startPosition, mapRef} = this.state;
+        const {userLocation, directions, selectedPlace} = this.props;
+        const {waypointIdx, heading, startPosition} = this.state;
 
         let waypoint = directions[waypointIdx];
         if (waypoint) {
@@ -248,16 +250,6 @@ class ARNavigator extends Component {
                 ]
             )
         })).flat();
-
-        if (mapRef) {
-            mapRef.fitToCoordinates(
-                bounds,
-                {
-                    edgePadding: { right: theme.scale(30), left: theme.scale(30) },
-                    animated: true
-                }
-            );
-        }
 
         return (
             <View style={{flex: 1}}>
@@ -350,11 +342,36 @@ class ARNavigator extends Component {
                     <View style={theme.rowAlignedCenterVertical}>
                         <View style={styles.bar} />
                         <MapContainer
-                            onSetRef={(mapRef) => this.setState({ mapRef })}
+                            onSetRef={(mapRef) => this.mapRef = mapRef}
                             points={points}
                             pins={[{location: selectedPlace.location, color: theme.textAccent}]}
                             isCleanMap={true}
                             containerStyle={{ width: '100%', height: theme.scale(210) }}
+                            noMoves={true}
+                            onLayout={() => {
+                                if (this.mapRef) {
+                                    this.mapRef.animateToRegion({
+                                        longitude: selectedPlace.location.lng,
+                                        latitude: selectedPlace.location.lat,
+                                        latitudeDelta: 0.01250270688370961,
+                                        longitudeDelta: 0.01358723958820065,
+                                    }, 1200);
+                                    setTimeout(() => {
+                                        this.mapRef.fitToCoordinates(
+                                            this.props.bounds,
+                                            {
+                                                edgePadding: {
+                                                    top: 0,
+                                                    bottom: 0,
+                                                    right: theme.scale(30),
+                                                    left: theme.scale(30)
+                                                },
+                                                animated: true
+                                            }
+                                        );
+                                    }, 1200);
+                                }
+                            }}
                         />
                     </View>
                 </Popup>

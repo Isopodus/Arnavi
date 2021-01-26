@@ -49,8 +49,8 @@ export default function reducers(state = initialState, action) {
       return { ...state, directions };
     }
     case "SET_BOUNDS": {
-      const { bounds } = action;
-      return { ...state, bounds };
+      const { payload } = action;
+      return { ...state, bounds: payload };
     }
     case "CLEAN_BOUNDS": {
       const { bounds } = initialState;
