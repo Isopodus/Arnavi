@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Vibration, Text, TouchableOpacity} from 'react-native';
+import {View, Vibration, Text, TouchableOpacity, Alert, BackHandler} from 'react-native';
 
 const {DeviceEventEmitter} = require('react-native');
 const ReactNativeHeading = require('react-native-heading');
@@ -8,13 +8,14 @@ import {
     ViroARSceneNavigator,
     ViroMaterials,
 } from 'react-viro';
-import {Icon, MapContainer, NavigatorScene} from "../components";
+import {Button, Icon, MapContainer, NavigatorScene, Popup} from "../components";
 import { connect } from 'react-redux';
 
 import {bearing, calcCrow, rotatePoint} from "../utils/Coordinates";
 import {ARWaypointMarker} from "../components";
 import getTheme from "../global/Style";
 import LinearGradient from "react-native-linear-gradient";
+import { convertDistance } from '../utils/Distance';
 
 class ARNavigator extends Component {
 
@@ -51,6 +52,7 @@ class ARNavigator extends Component {
             trackingInitialized: false,
             trackingGood: false,
             trackingHeadingFix: 0,
+            modal: false
         };
     }
 
@@ -60,7 +62,7 @@ class ARNavigator extends Component {
                 this.setState({
                     headingIsSupported: didStart,
                 })
-            })
+            });
 
         DeviceEventEmitter.addListener('headingUpdated', data => {
             data = (data + 360) % 360;
@@ -68,6 +70,11 @@ class ARNavigator extends Component {
                 heading: data,
             });
         });
+
+        this.backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            this.onClose
+        );
     }
 
     componentDidUpdate(prevProps) {
@@ -119,6 +126,7 @@ class ARNavigator extends Component {
     componentWillUnmount() {
         ReactNativeHeading.stop();
         DeviceEventEmitter.removeAllListeners('headingUpdated');
+        this.backHandler.remove();
     }
 
     drawWaypoint = (waypointLocation, key) => {
@@ -167,10 +175,27 @@ class ARNavigator extends Component {
         }
     };
 
+    onClose = () => {
+        Alert.alert("Hold on!", "Are you sure you want to go back?", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+            },
+            {
+                text: "YES",
+                onPress: () => {
+                    this.props.navigation.navigate('Home');
+                }
+            }
+        ]);
+        return true;
+    };
+
     render() {
         const theme = getTheme();
         const styles = getStyles(theme);
-        const {userLocation} = this.props;
+        const {userLocation, selectedPlace} = this.props;
         const {waypointIdx, heading} = this.state;
         const isDone = !!!this.waypoints[waypointIdx];
 
@@ -196,20 +221,41 @@ class ARNavigator extends Component {
                         onTrackingLost: this.onTrackingLost,
                         onTrackingRecovered: this.onTrackingRecovered,
                     }}
-                    initialScene={{
-                        scene: NavigatorScene,
-                    }}
+                    initialScene={{ scene: NavigatorScene }}
                 />
                 <LinearGradient
                     colors={[theme.rgba(theme.black, 1), theme.rgba(theme.black, 0)]}
                     style={styles.gradient}
                 />
-                <View style={styles.circle} />
-                <TouchableOpacity onPress={() => {}} style={styles.touchableDetail}>
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={this.onClose} style={{ flex: 0.1, margin: theme.scale(2) }}>
+                        <Icon
+                            name={'arrow-back'}
+                            color={theme.textAccent}
+                            size={theme.scale(20)}
+                        />
+                    </TouchableOpacity>
+                    <View
+                        style={
+                            [
+                                theme.rowAlignedCenterVertical,
+                                { flex: 0.9, paddingRight: theme.scale(30) }
+                            ]
+                        }
+                    >
+                        <Text style={styles.secondaryHeaderText}>go to</Text>
+                        <Text style={styles.headerText} numberOfLines={1}>{selectedPlace.name}</Text>
+                    </View>
+                </View>
+                <LinearGradient
+                    colors={[theme.rgba(theme.black, 0.2), theme.rgba(theme.black, 1)]}
+                    style={styles.circle}
+                />
+                <TouchableOpacity onPress={() => this.setState({ modal: true })} style={styles.touchableDetail}>
                     <Icon
-                        name={'layers-outline'}
+                        name={'map'}
                         color={theme.textAccent}
-                        size={theme.scale(30)}
+                        size={theme.scale(25)}
                         style={styles.roundNextBtn}
                     />
                 </TouchableOpacity>
@@ -225,19 +271,37 @@ class ARNavigator extends Component {
                         }
                     />
                 </View>
+                <View
+                    style={[
+                        theme.rowAlignedCenterVertical,
+                        { position: 'absolute', bottom: theme.scale(20), flex: 1, width: '100%' }
+                    ]}
+                >
+                    <Text style={styles.text}>{convertDistance(distance)}</Text>
+                    <Text style={[styles.text, { fontSize: theme.scale(13) }]}>to the next point</Text>
+                </View>
                 {!isDone && <TouchableOpacity onPress={() => this.onNextWaypoint()} style={styles.touchableNext}>
                     <View style={styles.roundNextBtn}>
                         <Text style={styles.primaryText}>Next</Text>
                     </View>
                 </TouchableOpacity>}
-                <Text style={styles.text}>{`${userLocation.lat}, ${userLocation.lng}, ${distance}`}</Text>
+                <Popup visible={this.state.modal} style={styles.modal} onClose={() => this.setState({ modal: false })}>
+                    <View style={theme.rowAlignedCenterVertical}>
+                        <View style={styles.bar} />
+                        <MapContainer
+                            isCleanMap={true}
+                            containerStyle={{ width: '100%', height: theme.scale(210) }}
+                        />
+                    </View>
+                </Popup>
             </View>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    userLocation: state.userLocation
+    userLocation: state.userLocation,
+    selectedPlace: state.selectedPlace
 });
 
 export default connect(mapStateToProps, null)(ARNavigator);
@@ -281,10 +345,12 @@ function getStyles(theme) {
             size: 16,
             align: 'left'
         }),
-        text: {
-            position: 'absolute',
-            top: 0,
-        },
+        text: theme.textStyle({
+            font: 'NunitoMedium',
+            color: 'textPlaceholder',
+            size: 18,
+            align: 'center'
+        }),
         circle: {
             flex: 1,
             position: 'absolute',
@@ -302,6 +368,49 @@ function getStyles(theme) {
             height: theme.scale(250),
             position: 'absolute',
             top: 0,
-        }
+        },
+        header: {
+            ...theme.rowAlignedBetween,
+            flex: 1,
+            paddingVertical: theme.scale(10),
+            paddingHorizontal: theme.scale(20),
+            position: 'absolute',
+            top: 0,
+            zIndex: 2,
+            width: '100%',
+            height: theme.scale(80)
+        },
+        headerText: theme.textStyle({
+            font: 'NunitoBold',
+            color: 'textAccent',
+            size: 18,
+            align: 'center'
+        }),
+        secondaryHeaderText: [
+            theme.textStyle({
+                font: 'NunitoRegular',
+                color: 'textPlaceholder',
+                size: 14,
+                align: 'center'
+            }),
+            {
+                marginBottom: theme.scale(5)
+            }
+        ],
+        modal: {
+            height: theme.scale(270),
+            backgroundColor: theme.rgba(theme.black, 0.8),
+            borderTopLeftRadius: theme.scale(20),
+            borderTopRightRadius: theme.scale(20),
+            paddingVertical: theme.scale(20),
+            paddingHorizontal: theme.scale(20),
+        },
+        bar: {
+            width: theme.scale(50),
+            height: theme.scale(4),
+            backgroundColor: theme.textSecondary,
+            borderRadius: theme.scale(10),
+            marginBottom: theme.scale(15)
+        },
     }
 }

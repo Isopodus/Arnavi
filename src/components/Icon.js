@@ -8,7 +8,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const iconsMaterialIcons = ['my-location', 'search', 'star-border', 'arrow-back', 'access-time', 'close', 'star', 'check'];
 const iconMaterialCommunityIcons = ['layers-outline', 'navigation'];
-const iconsFeather = ['arrow-up-left', 'navigation-2'];
+const iconsFeather = ['arrow-up-left', 'navigation-2', 'map'];
 const iconsFontAwesome5 = ['map-marker-alt'];
 
 const selectIcon = (name) => {
