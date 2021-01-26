@@ -386,7 +386,7 @@ class ARNavigator extends Component {
                                                 animated: true
                                             }
                                         );
-                                    }, 1200);
+                                    }, 1300);
                                 }
                             }}
                         />
