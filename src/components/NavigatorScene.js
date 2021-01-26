@@ -43,7 +43,7 @@ export default class NavigatorScene extends React.Component {
     }
 
     onCameraTransformUpdate = ({cameraTransform}) => {
-        //console.log(cameraTransform.rotation[1]);
+        console.log(cameraTransform.rotation[1]);
     }
 
 
