@@ -3,11 +3,13 @@ const SET_ACTIONS = {
   token: 'SET_TOKEN',
   place: 'SET_PLACE',
   history: 'SET_RECENT_LOCATIONS',
-  app: 'SET_APP_READY'
+  app: 'SET_APP_READY',
+  directions: 'SET_DIRECTIONS'
 };
 const CLEAN_ACTIONS = {
   location: 'CLEAN_LOCATION',
-  place: 'CLEAN_PLACE'
+  place: 'CLEAN_PLACE',
+  directions: 'CLEAN_DIRECTIONS'
 };
 
 export const setAction = (type, payload) => {

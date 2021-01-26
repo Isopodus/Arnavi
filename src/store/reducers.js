@@ -40,6 +40,14 @@ export default function reducers(state = initialState, action) {
 
       return { ...state, recentLocations };
     }
+    case "SET_DIRECTIONS": {
+      const { payload } = action;
+      return { ...state, directions: payload };
+    }
+    case "CLEAN_DIRECTIONS": {
+      const { directions } = initialState;
+      return { ...state, directions };
+    }
     default: return state;
   }
 };

@@ -13,7 +13,7 @@ export default function Navigator() {
     const status = useSelector(state => state.appReady);
     return(
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={"AR"}>
+            <Stack.Navigator initialRouteName={"Splash"}>
                 {!status && <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}} />}
                 <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
                 <Stack.Screen name="FavoriteLocations" component={FavoriteLocations} options={{headerShown: false}} />

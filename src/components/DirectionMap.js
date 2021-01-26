@@ -1,12 +1,13 @@
 import React from 'react';
 import {Animated, Easing, Text, TouchableOpacity, View} from "react-native";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Button, Icon, Popup} from "./index";
 import getTheme from "../global/Style";
 import { getDirection } from '../utils/Direction';
 import {convertDistance} from "../utils/Distance";
 import {useNavigation} from "@react-navigation/native";
 import Toast from "react-native-simple-toast";
+import {setAction} from "../store";
 
 const formattedSeconds = (seconds) => {
     let min = Math.ceil(seconds / 60);
@@ -24,6 +25,7 @@ export default function DirectionMap(props) {
     const { mapRef, setPoints, onClose } = props;
     const {userLocation, selectedPlace} = useSelector(state => state);
     const { navigate } = useNavigation();
+    const dispatch = useDispatch();
 
     const [modal, setModal] = React.useState(true);
     const [cameraPosition, setCameraPosition] = React.useState([]);
@@ -60,6 +62,8 @@ export default function DirectionMap(props) {
                     const { routes } = data;
                     const { bounds, legs } = routes[0];
                     const { steps } = legs[0];
+
+                    dispatch(setAction('directions', steps));
 
                     const coords = [
                         { latitude: bounds.northeast.lat, longitude: bounds.northeast.lng },

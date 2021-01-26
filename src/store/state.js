@@ -18,7 +18,8 @@ const initialState = {
     isFavorite: false,
     isFullData: false
   },
-  recentLocations: []
+  recentLocations: [],
+  directions: [],
 };
 
 export default initialState;
