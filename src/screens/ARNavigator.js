@@ -45,23 +45,22 @@ class ARNavigator extends Component {
             heading: 0,
             initialHeading: null,
             initialPosition: null,
+            trackingInitialized: false,
+            trackingGood: false,
         };
     }
 
     componentDidMount() {
         ReactNativeHeading.start(1)
             .then(didStart => {
-                console.log(didStart);
                 this.setState({
                     headingIsSupported: didStart,
                 })
             })
 
         DeviceEventEmitter.addListener('headingUpdated', data => {
-            const {initialHeading} = this.state;
             data = (data + 360) % 360;
             this.setState({
-                initialHeading: this.state.initialHeading === null ? data : initialHeading,
                 heading: data,
             });
         });
@@ -81,6 +80,18 @@ class ARNavigator extends Component {
         }
     }
 
+    updateInitialHeading = () => {
+        const {heading} = this.state;
+        this.setState({initialHeading: heading})
+    }
+
+    updateTrackingStatus = (isNormal, isInitialized) => {
+        this.setState({
+            trackingInitialized: isInitialized,
+            trackingGood: isNormal,
+        })
+    }
+
     componentWillUnmount() {
         ReactNativeHeading.stop();
         DeviceEventEmitter.removeAllListeners('headingUpdated');
@@ -89,6 +100,7 @@ class ARNavigator extends Component {
     drawWaypoint = (waypointLocation, key) => {
         const {initialHeading, initialPosition} = this.state;
 
+        console.log(initialHeading, !!initialPosition)
         if (waypointLocation && initialHeading !== null && initialPosition !== null) {
             const distance = calcCrow(
                 initialPosition.lat, initialPosition.lng,
@@ -155,6 +167,8 @@ class ARNavigator extends Component {
                 <ViroARSceneNavigator
                     viroAppProps={{
                         waypoint: this.drawWaypoint(this.waypoints[waypointIdx], waypointIdx),
+                        updateInitialHeading: this.updateInitialHeading,
+                        updateTrackingStatus: this.updateTrackingStatus,
                     }}
                     initialScene={{
                         scene: NavigatorScene,

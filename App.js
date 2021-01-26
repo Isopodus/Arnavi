@@ -29,6 +29,9 @@ function AppRoot() {
         if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 
             const setLocationWatch = () => {
+                if (locationWatch) {
+                    clearInterval(locationWatch);
+                }
                 locationWatch = setInterval(() => {
                     Geolocation.getCurrentPosition((info) => {
                             const {longitude, latitude} = info.coords;
@@ -36,8 +39,8 @@ function AppRoot() {
                             dispatch(setAction('app'));
                         }, askGPS,
                         {
-                            timeout: 5000,
-                            maximumAge: 10000,
+                            timeout: 10000,
+                            maximumAge: 15000,
                             enableHighAccuracy: true
                         });
                 }, 1000);
@@ -50,12 +53,9 @@ function AppRoot() {
                     fastInterval: 1000,
                 })
                     .then(response => {
-                        if (response === 'enabled') {
+                        if (response === 'enabled' || response === 'already-enabled') {
                             // Set location watch after a timeout
                             setTimeout(setLocationWatch, 1000);
-                        } else if (response === 'already-enabled') {
-                            // Set location watch
-                            setLocationWatch();
                         }
                     });
             };

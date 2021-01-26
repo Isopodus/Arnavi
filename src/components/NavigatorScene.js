@@ -7,24 +7,31 @@ export default class NavigatorScene extends React.Component {
         super(props);
 
         this.state = {
-            isTrackingGood: false,
+            isTrackingGood: null,
         }
     }
 
-    componentDidMount() {
-        console.log('scene mounted')
-    }
-
     onTrackingUpdated = (state, reason) => {
-        console.log('tracking updated');
-        if (state === ViroConstants.TRACKING_UNAVAILABLE) {
-            console.log('unavailable');
+        const {isTrackingGood} = this.state;
+        const {updateTrackingStatus, updateInitialHeading} = this.props.arSceneNavigator.viroAppProps;
+
+        if (state === ViroConstants.TRACKING_UNAVAILABLE && isTrackingGood !== null) {
+            console.log('tracking unavailable');
             this.setState({isTrackingGood: false});
-        } else if (state === ViroConstants.TRACKING_LIMITED) {
-            console.log('limited');
+            updateTrackingStatus(false, true)
+        } else if (state === ViroConstants.TRACKING_LIMITED && isTrackingGood !== null) {
+            console.log('tracking limited');
             this.setState({isTrackingGood: true});
+            updateTrackingStatus(false, true)
         } else if (state === ViroConstants.TRACKING_NORMAL) {
-            console.log('normаl');
+            console.log('tracking normal');
+
+            if (isTrackingGood === null) {
+                updateTrackingStatus(true, true)
+                updateInitialHeading();
+                console.log('tracking init')
+            }
+
             this.setState({isTrackingGood: true});
         }
 
@@ -43,6 +50,7 @@ export default class NavigatorScene extends React.Component {
     render() {
         const {waypoint} = this.props.arSceneNavigator.viroAppProps;
         return <ViroARScene
+            onTrackingInitialized={this.onTrackingInitialized}
             onTrackingUpdated={this.onTrackingUpdated}
             onCameraTransformUpdate={this.onCameraTransformUpdate}
         >
