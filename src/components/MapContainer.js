@@ -1,10 +1,19 @@
 import React from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker, Polyline } from 'react-native-maps';
 import style from '../assets/map/style';
+import styleClean from '../assets/map/styleClean';
 import getTheme from "../global/Style";
 
 export default function MapContainer(props) {
-    const { fullscreen = true, onSetRef, pins, onPinClick, points, onPress } = props;
+    const {
+        fullscreen = true,
+        onSetRef = () => {},
+        pins = [], onPinClick,
+        points = [],
+        onPress = () => {},
+        isCleanMap = false,
+        containerStyle = {}
+    } = props;
     const theme = getTheme();
 
     const markers = React.useMemo(() => {
@@ -35,8 +44,8 @@ export default function MapContainer(props) {
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}
-            style={fullscreen && { height: '100%' }}
-            customMapStyle={style}
+            style={[fullscreen && { height: '100%' }, containerStyle]}
+            customMapStyle={isCleanMap ? styleClean : style}
         >
             {markers}
             {points.length !== 0 && (

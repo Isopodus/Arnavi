@@ -9,17 +9,15 @@ import {useSelector} from "react-redux";
 
 const Stack = createStackNavigator();
 
-const arnavi = () => <ARNavigator/>;
-
 export default function Navigator() {
     const status = useSelector(state => state.appReady);
     return(
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={"Splash"}>
+            <Stack.Navigator initialRouteName={"AR"}>
                 {!status && <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}} />}
                 <Stack.Screen name="Home" component={Home} options={{headerShown: false}} />
                 <Stack.Screen name="FavoriteLocations" component={FavoriteLocations} options={{headerShown: false}} />
-                <Stack.Screen name="AR" component={arnavi} options={{headerShown: false}} />
+                <Stack.Screen name="AR" component={ARNavigator} options={{headerShown: false}} />
             </Stack.Navigator>
         </NavigationContainer>
     )

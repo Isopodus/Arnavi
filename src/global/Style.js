@@ -145,6 +145,8 @@ const commonStyles = {
 
 export default function getTheme() {
   return {
+    fullWidth: width,
+    fullHeight: height,
     ...colors,
     ...commonStyles,
     scale,

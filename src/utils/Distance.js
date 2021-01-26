@@ -4,7 +4,7 @@ import {getPreciseDistance} from "geolib";
 export const convertDistance = (m) => {
     if (m) {
         const km = m / 1000;
-        if (km < 0.5) return `${m} m`;
+        if (km < 0.5) return `${Math.round(m)} m`;
         else if (km > 9999) return '';
         else return `${Math.round(km)} km`;
     }

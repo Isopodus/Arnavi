@@ -1,3 +1,4 @@
+export const ARWaypointMarker = require('./ARWaypointMarker').default;
 export const Button = require('./Button').default;
 export const DirectionMap = require('./DirectionMap').default;
 export const Icon = require('./Icon').default;

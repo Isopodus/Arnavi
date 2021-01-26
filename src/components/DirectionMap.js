@@ -107,12 +107,11 @@ export default function DirectionMap(props) {
     return(
         <React.Fragment>
             <View style={styles.header}>
-                <TouchableOpacity onPress={onClose}>
+                <TouchableOpacity onPress={onClose} style={{ flex: 0.1, margin: theme.scale(2) }}>
                     <Icon
                         name={'arrow-back'}
                         color={theme.textAccent}
                         size={theme.scale(20)}
-                        style={{ flex: 0.1, margin: theme.scale(2) }}
                     />
                 </TouchableOpacity>
                 <View
